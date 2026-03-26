@@ -1,0 +1,35 @@
+.statCard {
+  background: var(--surface);
+  border: 1px solid var(--ink-6);
+  border-radius: var(--r-sm);
+  padding: 16px;
+  text-align: center;
+  box-shadow: var(--sh-xs);
+}
+
+.statNum {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.statLbl {
+  font-size: 11px;
+  color: var(--ink-4);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .statCard { padding: var(--card-pad); }
+  .statNum { font-size: 20px; }
+}
+
+@media (max-width: 480px) {
+  .statCard { padding: 12px; }
+  .statNum { font-size: 18px; }
+  .statLbl { font-size: 10px; }
+}

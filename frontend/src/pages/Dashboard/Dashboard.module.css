@@ -1,0 +1,197 @@
+/* Dashboard — page-specific styles */
+
+.loadingWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Page header */
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.greeting {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink, #1a1a1a);
+  margin: 0;
+}
+
+.dateStr {
+  color: var(--ink-light, #6b7280);
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+}
+
+.headerActions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Left / right columns inside gr2 */
+.leftCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Active cases table */
+.tableWrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table th {
+  text-align: left;
+  padding: 0.625rem 0.75rem;
+  font-weight: 600;
+  color: var(--ink-light, #6b7280);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--border, #e5e7eb);
+}
+
+.table td {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--border-light, #f3f4f6);
+  vertical-align: middle;
+}
+
+.clickRow {
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.clickRow:hover {
+  background-color: var(--surface-hover, #f9fafb);
+}
+
+.caseNum {
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.emptyMsg {
+  text-align: center;
+  color: var(--ink-light, #6b7280);
+  padding: 2rem 0;
+  margin: 0;
+}
+
+.aiNote {
+  margin: 0 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--ink, #1a1a1a);
+}
+
+/* Suspense status colors */
+.ok {
+  color: var(--color-green-600, #16a34a);
+  font-weight: 500;
+}
+
+.warn {
+  color: var(--color-amber-600, #d97706);
+  font-weight: 600;
+}
+
+.over {
+  color: var(--color-red-600, #dc2626);
+  font-weight: 700;
+}
+
+/* Suspense compliance gauges */
+.gaugeRow {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 0.5rem 0;
+}
+
+.gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gaugeRing {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.gaugeText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--ink, #1a1a1a);
+}
+
+.gaugeLabel {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-light, #6b7280);
+}
+
+/* Quick actions stack */
+.quickActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quickActions button {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .pageHeader {
+    flex-direction: column;
+  }
+
+  .headerActions {
+    width: 100%;
+  }
+
+  .headerActions button {
+    flex: 1;
+  }
+
+  .gaugeRow {
+    gap: 1.5rem;
+  }
+}

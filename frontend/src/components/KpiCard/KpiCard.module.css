@@ -1,0 +1,49 @@
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--ink-6);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  box-shadow: var(--sh-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.kpiStripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.kpiNum {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.kpiLabel {
+  font-size: 12px;
+  color: var(--ink-4);
+  font-weight: 500;
+}
+
+.kpiTrend {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .kpi { padding: var(--card-pad); }
+  .kpiNum { font-size: 24px; }
+  .kpiLabel { font-size: 11px; }
+}
+
+@media (max-width: 480px) {
+  .kpi { border-radius: var(--r-sm); }
+  .kpiNum { font-size: 22px; }
+}

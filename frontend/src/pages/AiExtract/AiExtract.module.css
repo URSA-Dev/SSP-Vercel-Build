@@ -1,0 +1,78 @@
+/* ── AI Extract Page ── */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ── Filters ── */
+.filterRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.filterSelect {
+  padding: 8px 12px;
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--surface);
+  outline: none;
+  cursor: pointer;
+}
+
+.filterSelect:focus {
+  border-color: var(--uscg);
+  box-shadow: 0 0 0 3px rgba(74, 92, 47, 0.1);
+}
+
+/* ── Table ── */
+.tableCard {
+  padding: 0;
+}
+
+.docName {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.caseLink {
+  color: var(--uscg);
+  text-decoration: none;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.caseLink:hover {
+  text-decoration: underline;
+}
+
+.emptyRow {
+  text-align: center;
+  color: var(--ink-5);
+  padding: 40px 16px;
+  font-size: 14px;
+}
+
+.hideOnMobile {}
+@media (max-width: 768px) {
+  .hideOnMobile { display: none; }
+  .pageHeader { flex-direction: column; }
+}

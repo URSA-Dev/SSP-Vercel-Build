@@ -1,0 +1,85 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Build output
+frontend/dist/
+frontend/build/
+backend/dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+frontend/.env
+backend/.env
+
+# Secrets
+*.pem
+*.key
+*.crt
+credentials.json
+service-account.json
+
+# Terraform
+infrastructure/**/.terraform/
+infrastructure/**/*.tfstate
+infrastructure/**/*.tfstate.backup
+infrastructure/**/*.tfvars
+!infrastructure/**/*.tfvars.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+
+# Claude Code AI tooling (local only — not useful on remote)
+.claude/
+.mcp.json
+
+# Dev tracking (local only)
+tasks/
+
+# Uploads
+uploads/
+backend/uploads/
+
+# Temporary
+tmp/
+temp/
+*.tmp
+
+# Localstack
+.localstack/
+
+# Payload CMS (separate repo)
+cms/
+
+# Python (if services added)
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+htmlcov/
+
+# Secrets (additional)
+*.secret
+*.p12
+*.pfx

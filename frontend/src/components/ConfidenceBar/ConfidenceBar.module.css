@@ -1,0 +1,52 @@
+.confBarRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.confBarTrack {
+  flex: 1;
+  height: 8px;
+  background: var(--surface-3);
+  border-radius: var(--r-full);
+  overflow: hidden;
+}
+
+.confBarFill {
+  height: 100%;
+  border-radius: var(--r-full);
+  transition: width .4s ease;
+  background: var(--uscg-lt);
+}
+
+.high {
+  background: var(--green);
+}
+
+.mid {
+  background: var(--amber);
+}
+
+.low {
+  background: var(--red);
+}
+
+.confPct {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-2);
+  min-width: 36px;
+  text-align: right;
+}
+
+.na {
+  font-size: 12px;
+  color: var(--ink-5);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .confBarRow { gap: 8px; }
+  .confBarTrack { height: 6px; }
+  .confPct { font-size: 11px; min-width: 30px; }
+}

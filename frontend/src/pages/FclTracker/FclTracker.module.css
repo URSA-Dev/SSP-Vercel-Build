@@ -1,0 +1,115 @@
+/* ── FCL Tracker Page ── */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ── Filters ── */
+.filterRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  padding: 8px 12px;
+}
+
+.searchBox:focus-within {
+  border-color: var(--uscg);
+  box-shadow: 0 0 0 3px rgba(74, 92, 47, 0.1);
+}
+
+.searchIcon {
+  color: var(--ink-5);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  min-width: 200px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  background: transparent;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--ink-5);
+}
+
+.filterSelect {
+  padding: 8px 12px;
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--surface);
+  outline: none;
+  cursor: pointer;
+}
+
+.filterSelect:focus {
+  border-color: var(--uscg);
+  box-shadow: 0 0 0 3px rgba(74, 92, 47, 0.1);
+}
+
+/* ── Table ── */
+.tableCard {
+  padding: 0;
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortable:hover {
+  color: var(--uscg);
+}
+
+.facilityCell {
+  font-weight: 500;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.emptyRow {
+  text-align: center;
+  color: var(--ink-5);
+  padding: 40px 16px;
+  font-size: 14px;
+}
+
+.hideOnMobile {}
+@media (max-width: 768px) {
+  .hideOnMobile { display: none; }
+  .pageHeader { flex-direction: column; }
+  .filterRow { flex-direction: column; align-items: stretch; }
+  .searchInput { min-width: 140px; }
+}

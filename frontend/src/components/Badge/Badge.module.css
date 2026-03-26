@@ -1,0 +1,61 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--r-full);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+
+.blue {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.green {
+  background: var(--green-2);
+  color: var(--green);
+}
+
+.amber {
+  background: var(--amber-2);
+  color: var(--amber);
+}
+
+.red {
+  background: var(--red-2);
+  color: var(--red);
+}
+
+.gray {
+  background: var(--surface-3);
+  color: var(--ink-4);
+}
+
+.violet {
+  background: var(--violet-2);
+  color: var(--violet);
+}
+
+.teal {
+  background: var(--teal-pale);
+  color: var(--teal);
+}
+
+.navy {
+  background: #dbeafe;
+  color: var(--navy);
+}
+
+.orange {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .badge { font-size: 10px; padding: 2px 6px; }
+}

@@ -1,0 +1,109 @@
+.topbar {
+  height: 54px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--ink-6);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 12px;
+  box-shadow: var(--sh-xs);
+}
+
+.hamburger {
+  display: none;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--r-sm);
+  background: var(--surface-3);
+  border: 1px solid var(--surface-4);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--ink-5);
+}
+
+.bcSep {
+  color: var(--ink-6);
+}
+
+.bcActive {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.topbarRight {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.restrictedBadge {
+  background: var(--red-pale);
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  color: var(--red);
+  border-radius: var(--r-xs);
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.notifBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--surface-4);
+  cursor: pointer;
+  font-size: 16px;
+  position: relative;
+  transition: all 0.14s;
+}
+
+.notifBtn:hover {
+  background: var(--surface-3);
+}
+
+.notifPip {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  border: 1.5px solid white;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 12px;
+    height: 52px;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .restrictedBadge {
+    display: none;
+  }
+}

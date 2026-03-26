@@ -1,0 +1,130 @@
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--surface-2);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* App Shell */
+#root { height: 100%; }
+#app { display: flex; height: 100vh; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--ink-6); border-radius: var(--r-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-5); }
+
+/* Links */
+a { color: var(--uscg); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Focus visible */
+:focus-visible {
+  outline: 2px solid var(--uscg);
+  outline-offset: 2px;
+}
+
+/* ── Type Cards (New Case Wizard — Investigation Type) ───────────────── */
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.type-card {
+  border: 2px solid var(--surface-4, #e5e7eb);
+  border-radius: var(--r, 8px);
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.14s;
+  text-align: center;
+}
+
+.type-card:hover {
+  border-color: var(--uscg-lt, #6b8040);
+  background: var(--uscg-pale, #f3f5ef);
+}
+
+.type-card.selected {
+  border-color: var(--uscg, #4a5c2f);
+  background: var(--uscg-pale, #f3f5ef);
+}
+
+/* ── Global Reduced Motion ───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Touch Device Enhancements ──────────────────────────────────────── */
+@media (pointer: coarse) {
+  /* Minimum 44x44px touch targets per WCAG 2.1 */
+  button, a, [role="button"], input, select, textarea {
+    min-height: 44px;
+  }
+
+  /* Disable hover effects that create sticky states on touch */
+  button:hover, a:hover { text-decoration: none; }
+}
+
+/* ── Responsive — Tablet (<=1024px) ─────────────────────────────────── */
+@media (max-width: 1024px) {
+  .page-title { font-size: 22px; }
+
+  /* KPI row — 3 columns on tablet */
+  .kpi-row { grid-template-columns: repeat(3, 1fr) !important; gap: 12px; }
+
+  /* Stats grid — 3 columns on tablet */
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Responsive — Mobile (<=768px) ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .type-grid { grid-template-columns: repeat(2, 1fr); }
+  html, body { overflow: auto; height: auto; }
+  #app { display: block; height: auto; min-height: 100vh; }
+
+  body { font-size: 14px; }
+
+  /* Typography scaling */
+  .page-title { font-size: 20px; }
+  .page-sub { font-size: 12px; }
+
+  /* KPI row responsive — 2 columns */
+  .kpi-row { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; margin-bottom: 16px; }
+
+  /* Stats grid responsive — 2 columns */
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Responsive — Small Mobile (<=480px) ────────────────────────────── */
+@media (max-width: 480px) {
+  .type-grid { grid-template-columns: 1fr; }
+  body { font-size: 13px; }
+
+  .page-title { font-size: 18px; }
+  .page-sub { font-size: 11px; }
+
+  /* KPI row — single column on small screens */
+  .kpi-row { grid-template-columns: 1fr !important; gap: 8px; }
+
+  /* Stats grid — single column */
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Landscape Orientation (mobile) ─────────────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  /* Compact vertical spacing in landscape mobile */
+  .kpi-row { gap: 8px; margin-bottom: 8px; }
+  .page-title { font-size: 18px; }
+}

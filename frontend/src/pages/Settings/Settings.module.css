@@ -1,0 +1,101 @@
+/* ── Settings Page ── */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.headerActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.savedMsg {
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ── Settings Grid ── */
+.settingsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.input {
+  padding: 8px 12px;
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  outline: none;
+  max-width: 400px;
+}
+
+.input:focus {
+  border-color: var(--uscg);
+  box-shadow: 0 0 0 3px rgba(74, 92, 47, 0.1);
+}
+
+.select {
+  padding: 8px 12px;
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  outline: none;
+  max-width: 200px;
+  cursor: pointer;
+}
+
+.select:focus {
+  border-color: var(--uscg);
+  box-shadow: 0 0 0 3px rgba(74, 92, 47, 0.1);
+}
+
+.checkLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.checkLabel input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--uscg);
+}
+
+@media (max-width: 768px) {
+  .pageHeader { flex-direction: column; }
+  .input, .select { max-width: 100%; }
+}

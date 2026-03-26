@@ -1,0 +1,55 @@
+/* ── Metrics Page ── */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.emptyMsg {
+  text-align: center;
+  color: var(--ink-5);
+  padding: 2rem 0;
+  margin: 0;
+}
+
+/* ── Key Indicators Grid ── */
+.indicatorGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.indicator {
+  text-align: center;
+  padding: 12px;
+  background: var(--surface-2);
+  border-radius: var(--r-sm);
+}
+
+.indicatorValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.indicatorLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-4);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .pageHeader { flex-direction: column; }
+}

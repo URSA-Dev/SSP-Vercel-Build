@@ -1,0 +1,49 @@
+.main {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.contentScroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.page {
+  padding: 28px 28px 40px;
+  max-width: 1440px;
+}
+
+.mobOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+}
+
+.mobOverlayOpen {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .main {
+    display: block;
+    overflow: visible;
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .contentScroll {
+    display: block;
+    overflow: visible;
+    height: auto;
+  }
+
+  .page {
+    padding: 14px 12px 40px;
+    max-width: 100%;
+  }
+}

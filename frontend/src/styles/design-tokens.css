@@ -1,0 +1,103 @@
+/* ═══════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM — Clean Government-Grade White
+   Tone: Crisp, trustworthy, clinical precision
+   Accent: Army Green / DoW Olive #4a5c2f
+═══════════════════════════════════════════════════════════════════ */
+:root {
+  /* Ink / Neutrals */
+  --ink:        #0d1117;
+  --ink-2:      #1f2937;
+  --ink-3:      #374151;
+  --ink-4:      #6b7280;
+  --ink-5:      #9ca3af;
+  --ink-6:      #d1d5db;
+
+  /* Surfaces */
+  --surface:    #ffffff;
+  --surface-2:  #f9fafb;
+  --surface-3:  #f3f4f6;
+  --surface-4:  #e5e7eb;
+
+  /* Primary — Army Green / DoW Olive */
+  --uscg:       #4a5c2f;
+  --uscg-2:     #3a4a22;
+  --uscg-lt:    #6b8040;
+  --uscg-pale:  #f3f5ef;
+  --uscg-pale2: #e4e9da;
+
+  /* Semantic Colors */
+  --green:      #059669;
+  --green-pale: #ecfdf5;
+  --green-2:    #d1fae5;
+  --amber:      #d97706;
+  --amber-pale: #fffbeb;
+  --amber-2:    #fde68a;
+  --red:        #dc2626;
+  --red-pale:   #fef2f2;
+  --red-2:      #fee2e2;
+  --violet:     #7c3aed;
+  --violet-pale:#f5f3ff;
+  --violet-2:   #ede9fe;
+  --teal:       #0f766e;
+  --teal-pale:  #f0fdfa;
+  --navy:       #003087;
+
+  /* Typography */
+  --sans:   'Roboto', system-ui, sans-serif;
+  --mono:   'Roboto Mono', monospace;
+
+  /* Border Radius */
+  --r-xs:   4px;
+  --r-sm:   8px;
+  --r:      12px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-full: 9999px;
+
+  /* Shadows */
+  --sh-xs:  0 1px 2px rgba(13,17,23,.05);
+  --sh-sm:  0 1px 4px rgba(13,17,23,.07), 0 2px 8px rgba(13,17,23,.04);
+  --sh:     0 4px 16px rgba(13,17,23,.08), 0 1px 4px rgba(13,17,23,.04);
+  --sh-lg:  0 10px 32px rgba(13,17,23,.10), 0 4px 12px rgba(13,17,23,.06);
+  --sh-xl:  0 20px 60px rgba(13,17,23,.14), 0 8px 20px rgba(13,17,23,.08);
+
+  /* Layout */
+  --sb-w: 240px;
+
+  /* Responsive Spacing — scales down on smaller viewports */
+  --page-pad: 24px;
+  --card-pad: 20px;
+  --section-gap: 24px;
+
+  /* Borders */
+  --bdr: #e5e7eb;
+  --muted: #9ca3af;
+}
+
+/* ── Responsive Token Overrides ────────────────────────────────────────── */
+/* Breakpoints: 1024px (tablet), 768px (mobile), 480px (small mobile) */
+
+@media (max-width: 1024px) {
+  :root {
+    --page-pad: 20px;
+    --card-pad: 16px;
+    --section-gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --page-pad: 16px;
+    --card-pad: 14px;
+    --section-gap: 16px;
+    --sb-w: 0px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --page-pad: 12px;
+    --card-pad: 12px;
+    --section-gap: 12px;
+  }
+}

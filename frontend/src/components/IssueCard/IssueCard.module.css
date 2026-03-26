@@ -1,0 +1,117 @@
+.issueCard {
+  background: var(--surface);
+  border: 1px solid var(--ink-6);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.issueSevBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.sevCRITICAL { background: var(--red); }
+.sevHIGH { background: var(--amber); }
+.sevMODERATE { background: #f59e0b; }
+.sevLOW { background: var(--green); }
+.sevADMINISTRATIVE { background: var(--ink-5); }
+
+.issueBody {
+  padding: 14px 14px 14px 18px;
+}
+
+.issueHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.issueCategory {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+
+.issueSubcategory {
+  font-size: 11px;
+  color: var(--ink-4);
+}
+
+.issueGuideline {
+  font-size: 11px;
+  color: var(--ink-5);
+  margin-bottom: 6px;
+}
+
+.issueDesc {
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.issueMitigation {
+  font-size: 12px;
+  color: var(--ink-3);
+  background: var(--surface-2);
+  padding: 8px 10px;
+  border-radius: var(--r-xs);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.issueActions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.issueBtn {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--surface-4);
+  background: var(--surface);
+  color: var(--ink-3);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-weight: 500;
+  transition: all .15s;
+}
+
+.issueBtn:hover {
+  background: var(--surface-3);
+}
+
+.issueBtnActive {
+  background: var(--uscg-pale);
+  border-color: var(--uscg-lt);
+  color: var(--uscg);
+}
+
+.issueBtnDanger {
+  color: var(--red);
+}
+
+.issueBtnDanger:hover {
+  background: var(--red-pale);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .issueBody { padding: 12px 12px 12px 16px; }
+  .issueDesc { font-size: 12px; }
+  .issueMitigation { font-size: 11px; padding: 6px 8px; }
+  .issueActions { flex-wrap: wrap; }
+  .issueBtn { min-height: 36px; padding: 6px 10px; }
+}
+
+@media (max-width: 480px) {
+  .issueHeader { flex-direction: column; gap: 4px; }
+}

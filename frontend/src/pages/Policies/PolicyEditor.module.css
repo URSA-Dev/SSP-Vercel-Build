@@ -1,0 +1,108 @@
+/* ── Policy Editor Page ── */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ── Form ── */
+.formGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+
+.required {
+  color: var(--red);
+}
+
+.input {
+  padding: 8px 12px;
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  outline: none;
+}
+
+.input:focus {
+  border-color: var(--uscg);
+  box-shadow: 0 0 0 3px rgba(74, 92, 47, 0.1);
+}
+
+.select {
+  padding: 8px 12px;
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  outline: none;
+  max-width: 240px;
+  cursor: pointer;
+}
+
+.select:focus {
+  border-color: var(--uscg);
+  box-shadow: 0 0 0 3px rgba(74, 92, 47, 0.1);
+}
+
+.textarea {
+  padding: 8px 12px;
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  outline: none;
+  resize: vertical;
+}
+
+.textarea:focus {
+  border-color: var(--uscg);
+  box-shadow: 0 0 0 3px rgba(74, 92, 47, 0.1);
+}
+
+.contentArea {
+  font-family: var(--mono);
+  font-size: 13px;
+  min-height: 240px;
+}
+
+/* ── Actions ── */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .pageHeader { flex-direction: column; }
+  .select { max-width: 100%; }
+}

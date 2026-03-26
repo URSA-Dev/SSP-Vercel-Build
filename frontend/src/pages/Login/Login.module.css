@@ -1,0 +1,1223 @@
+/**
+ * @file Login.module.css
+ * @description CSS Module for the Login page — URSA SSP.
+ *
+ * Architecture:
+ *   - CSS custom properties scoped to `.page` for theming
+ *   - Split-screen layout: brand panel (left) + form panel (right)
+ *   - GPU-accelerated animations (transform, opacity only)
+ *   - `prefers-reduced-motion` respected — all animations disabled
+ *   - Responsive breakpoints: 1024px (tablet), 768px (mobile), 400px (small)
+ *
+ * Sections:
+ *   1. Custom Properties (color tokens, transitions, easings)
+ *   2. Page Layout (split-screen flex container)
+ *   3. Brand Panel (background, overlays, content)
+ *   4. Animated Effects (particles, scan line, data streams, radar)
+ *   5. Form Panel (container, header, fields, buttons)
+ *   6. Animations (keyframes, entrance staggers, micro-interactions)
+ *   7. Reduced Motion (fallback static states)
+ *   8. Responsive (tablet, mobile, small mobile)
+ *
+ * @module pages/Login/Login.module.css
+ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 1: Component Custom Properties
+   Description: Scoped design tokens for the login page — navy palette,
+                accent colors, transition timings, and easing curves.
+   ═══════════════════════════════════════════════════════════════════ */
+.page {
+  --login-navy: #0f1b33;
+  --login-navy-deep: #0a1224;
+  --login-navy-mid: #152443;
+  --login-navy-lt: #1e3a5f;
+  --login-accent: #1a3a5c;
+  --login-accent-hover: #0f1b33;
+  --login-accent-lt: #2a5a8c;
+  --login-accent-glow: rgba(26, 58, 92, 0.25);
+  --login-transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --login-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --login-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 2: Page Layout — Split Screen
+   Description: Full-viewport flex container. Brand panel takes 45%
+                width on desktop; form panel fills the remainder.
+   ═══════════════════════════════════════════════════════════════════ */
+.page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--surface);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 3: Brand Panel (Left Side)
+   Description: Dark navy gradient panel with layered visual effects.
+                Contains ::before radial glow and ::after bottom fade.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.brandPanel {
+  position: relative;
+  width: 45%;
+  min-width: 440px;
+  background: linear-gradient(165deg, var(--login-navy-mid) 0%, var(--login-navy) 40%, var(--login-navy-deep) 100%);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Subtle radial glow in center */
+.brandPanel::before {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(42, 90, 140, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gradient fade at bottom */
+.brandPanel::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to top, rgba(10, 18, 36, 0.6), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 4: Animated Background Effects
+   Description: Layered visual effects on the brand panel —
+                particle constellation (SVG), scan line, data streams,
+                and radar sonar rings.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 4a: Particle Network (SVG constellation overlay) ── */
+.connectionLines,
+.particleGroup {
+  /* Structural SVG group wrappers */
+}
+
+.particleNetwork {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── 4e: Form Particle Network (static grayscale constellation on form panel) ── */
+.formParticleNetwork {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 1;
+}
+
+/* ── 4b: Scanning Line (horizontal sweep effect) ── */
+.scanLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(42, 90, 140, 0.15) 20%,
+    rgba(42, 90, 140, 0.4) 50%,
+    rgba(42, 90, 140, 0.15) 80%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 0 20px 4px rgba(42, 90, 140, 0.08);
+}
+
+/* ── 4c: Data Streams (vertical falling columns) ── */
+.dataStreams {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.dataStream {
+  position: absolute;
+  top: -100%;
+  width: 1px;
+  height: 60px;
+  opacity: 0;
+}
+
+.ds1 { left: 8%; }
+.ds2 { left: 22%; }
+.ds3 { left: 45%; }
+.ds4 { left: 62%; }
+.ds5 { left: 78%; }
+.ds6 { left: 91%; }
+
+/* ── 4d: Radar Rings (pulsing sonar behind logo) ── */
+.radarContainer {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.radarRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(42, 90, 140, 0.08);
+  transform: translate(-50%, -50%) scale(0.2);
+  opacity: 0;
+}
+
+.radarRing1 { width: 100px; height: 100px; }
+.radarRing2 { width: 180px; height: 180px; }
+.radarRing3 { width: 280px; height: 280px; }
+.radarRing4 { width: 400px; height: 400px; }
+
+/* ── 3b: Brand Content (logo, title, tagline, compliance badges) ── */
+.brandContent {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 60px 56px;
+}
+
+.brandTop {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandLogo {
+  width: 300px;
+  height: auto;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: none;
+}
+
+.logoMounted {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.brandDivider {
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--login-accent-lt), var(--login-navy-lt));
+  border-radius: 2px;
+  margin-bottom: 28px;
+}
+
+.dividerMounted {
+  width: 48px;
+}
+
+.brandTitle {
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.8px;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.titleMounted {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.brandTagline {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.65;
+  letter-spacing: 0.3px;
+  max-width: 340px;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.taglineMounted {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Bottom features */
+.brandBottom {
+  margin-top: auto;
+}
+
+.brandFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.2px;
+  opacity: 0;
+  transform: translateX(-16px);
+}
+
+.featureMounted1,
+.featureMounted2,
+.featureMounted3 {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.featureIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--login-accent-lt);
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 5: Form Panel (Right Side)
+   Description: White background panel containing the authentication
+                form — header, input fields, options row, submit
+                button, create-account link, and footer.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.formPanel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: var(--surface);
+  position: relative;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* Subtle top accent line — animated draw */
+.formPanel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--login-accent) 0%, var(--login-accent-lt) 50%, transparent 100%);
+  z-index: 1;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.pageMounted .formPanel::before {
+  transform: scaleX(1);
+}
+
+.formContainer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mobile logo — hidden on desktop */
+.mobileLogo {
+  display: none;
+}
+
+.mobileLogoImg {
+  width: 200px;
+  height: auto;
+
+}
+
+/* ── 5a: Staggered Entrance Animations (form elements fade-in) ── */
+.stagger1, .stagger2, .stagger3, .stagger4,
+.stagger5, .stagger6, .stagger7 {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+/* mounted states set via class — actual animation in @media below */
+
+/* ── 5b: Form Header (title + subtitle) ── */
+.formHeader {
+  margin-bottom: 36px;
+}
+
+.formTitle {
+  font-family: var(--sans);
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.formSubtitle {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink-4);
+  line-height: 1.5;
+  letter-spacing: 0.15px;
+}
+
+/* ── 5c: Error Alert (validation / API error banner) ── */
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--red-pale);
+  border: 1px solid var(--red-2);
+  border-radius: var(--r-sm);
+  border-left: 3px solid var(--red);
+  margin-bottom: 24px;
+  animation: errorSlide 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes errorSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.errorIcon {
+  width: 18px;
+  height: 18px;
+  color: var(--red);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.errorText {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--red);
+  line-height: 1.5;
+  font-weight: 500;
+  letter-spacing: 0.15px;
+}
+
+/* ── 5d: Form Layout ── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── 5e: Form Fields (label, input wrapper, icons, states) ── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0.2px;
+}
+
+.inputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 14px;
+  width: 18px;
+  height: 18px;
+  color: var(--ink-5);
+  pointer-events: none;
+  transition: color var(--login-transition), transform var(--login-transition);
+  z-index: 1;
+}
+
+/* Highlight icon on input focus */
+.inputWrap:focus-within .inputIcon {
+  color: var(--login-accent-lt);
+}
+
+.input {
+  width: 100%;
+  padding: 13px 14px 13px 44px;
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--surface);
+  transition:
+    border-color var(--login-transition),
+    box-shadow var(--login-transition),
+    background var(--login-transition),
+    transform var(--login-transition);
+  outline: none;
+  line-height: 1.4;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: var(--ink-5);
+  font-weight: 400;
+}
+
+.input:hover:not(:focus):not(:disabled) {
+  border-color: var(--ink-6);
+  background: var(--surface-2);
+}
+
+.input:focus {
+  border-color: var(--login-accent-lt);
+  box-shadow:
+    0 0 0 3px var(--login-accent-glow),
+    0 1px 3px rgba(0, 0, 0, 0.06);
+  background: var(--surface);
+  transform: scale(1.01);
+}
+
+.input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--surface-2);
+}
+
+.inputPassword {
+  padding-right: 48px;
+}
+
+.inputError {
+  border-color: var(--red);
+}
+
+.inputError:focus {
+  box-shadow:
+    0 0 0 3px rgba(220, 38, 38, 0.15),
+    0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* ── 5f: Password Visibility Toggle Button ── */
+.togglePassword {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--ink-5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--r-xs);
+  transition: color var(--login-transition), background var(--login-transition);
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.togglePassword:hover {
+  color: var(--ink-2);
+  background: var(--surface-3);
+}
+
+.togglePassword:focus-visible {
+  outline: 2px solid var(--login-accent);
+  outline-offset: 0;
+}
+
+.toggleIcon {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── 5g: Options Row (remember-me checkbox + forgot password link) ── */
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -4px;
+}
+
+.checkGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--login-navy);
+  cursor: pointer;
+  margin: 0;
+  border-radius: var(--r-xs);
+}
+
+.checkLabel {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink-3);
+  user-select: none;
+  cursor: pointer;
+  font-weight: 400;
+  letter-spacing: 0.15px;
+}
+
+.forgotLink {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--login-accent);
+  text-decoration: none;
+  transition: color var(--login-transition);
+  padding: 8px 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.15px;
+}
+
+.forgotLink:hover {
+  color: var(--login-accent-hover);
+  text-decoration: underline;
+}
+
+.forgotLink:focus-visible {
+  outline: 2px solid var(--login-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── 5h: Submit Button (gradient, shimmer, hover lift, loading pulse) ── */
+.submitBtn {
+  width: 100%;
+  padding: 14px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--sans);
+  color: #fff;
+  background: linear-gradient(180deg, var(--login-accent-lt) 0%, var(--login-accent) 100%);
+  border: none;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition:
+    transform var(--login-transition),
+    box-shadow var(--login-transition),
+    background var(--login-transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  line-height: 1;
+  min-height: 50px;
+  margin-top: 4px;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.3px;
+  box-shadow:
+    0 1px 3px rgba(15, 27, 51, 0.3),
+    0 4px 12px rgba(15, 27, 51, 0.15);
+}
+
+/* Gradient shimmer sweep */
+.submitBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+  transition: none;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 2px 6px rgba(15, 27, 51, 0.35),
+    0 8px 24px rgba(15, 27, 51, 0.2);
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow:
+    0 1px 2px rgba(15, 27, 51, 0.3),
+    0 2px 8px rgba(15, 27, 51, 0.15);
+}
+
+.submitBtn:focus-visible {
+  outline: 2px solid var(--login-accent);
+  outline-offset: 3px;
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Loading pulse glow */
+.submitLoading {
+  box-shadow:
+    0 0 0 0 rgba(42, 90, 140, 0.4),
+    0 1px 3px rgba(15, 27, 51, 0.3);
+}
+
+.btnArrow {
+  width: 18px;
+  height: 18px;
+  transition: transform var(--login-transition);
+}
+
+.submitBtn:hover:not(:disabled) .btnArrow {
+  transform: translateX(3px);
+}
+
+/* ── 5i: Loading Spinner (rotating border animation) ── */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── 5j: Create Account Row (sign-up CTA below form) ── */
+.createRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--surface-3);
+}
+
+.createText {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink-4);
+  letter-spacing: 0.15px;
+}
+
+.createLink {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--login-accent);
+  text-decoration: none;
+  transition: color var(--login-transition);
+  padding: 4px 0;
+  letter-spacing: 0.15px;
+}
+
+.createLink:hover {
+  color: var(--login-accent-hover);
+  text-decoration: underline;
+}
+
+.createLink:focus-visible {
+  outline: 2px solid var(--login-accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── 5k: Footer (copyright notice) ── */
+.footer {
+  margin-top: 48px;
+  text-align: center;
+}
+
+.footerText {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-5);
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 6: Animations
+   Description: All keyframes and entrance transitions. Only active
+                when `prefers-reduced-motion: no-preference`. Uses
+                GPU-composited properties only (transform, opacity).
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ── Particle pulse ── */
+  .particleCore {
+    animation: particlePulse 4s ease-in-out infinite;
+  }
+
+  .particleGlow {
+    animation: glowPulse 5s ease-in-out infinite;
+  }
+
+  .connLine {
+    animation: lineFlicker 6s ease-in-out infinite;
+  }
+
+  @keyframes particlePulse {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.3); }
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.4; }
+  }
+
+  @keyframes lineFlicker {
+    0%, 100% { opacity: 0.6; }
+    30% { opacity: 1; }
+    70% { opacity: 0.3; }
+  }
+
+  /* ── Scan line sweep ── */
+  .scanLine {
+    animation: scanSweep 8s linear infinite;
+  }
+
+  @keyframes scanSweep {
+    0% { top: -2px; opacity: 0; }
+    5% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  /* ── Data streams ── */
+  .dataStream {
+    background: linear-gradient(
+      180deg,
+      transparent,
+      rgba(42, 90, 140, 0.25),
+      rgba(42, 90, 140, 0.08),
+      transparent
+    );
+    animation: dataFlow 12s linear infinite;
+  }
+
+  .ds1 { animation-delay: 0s; animation-duration: 10s; }
+  .ds2 { animation-delay: 2.5s; animation-duration: 14s; }
+  .ds3 { animation-delay: 5s; animation-duration: 11s; }
+  .ds4 { animation-delay: 1s; animation-duration: 13s; }
+  .ds5 { animation-delay: 4s; animation-duration: 9s; }
+  .ds6 { animation-delay: 7s; animation-duration: 15s; }
+
+  @keyframes dataFlow {
+    0% {
+      top: -80px;
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.6;
+    }
+    90% {
+      opacity: 0.6;
+    }
+    100% {
+      top: 110%;
+      opacity: 0;
+    }
+  }
+
+  /* ── Radar rings ── */
+  .radarRing {
+    animation: radarPulse 6s ease-out infinite;
+  }
+
+  .radarRing1 { animation-delay: 0s; }
+  .radarRing2 { animation-delay: 1.5s; }
+  .radarRing3 { animation-delay: 3s; }
+  .radarRing4 { animation-delay: 4.5s; }
+
+  @keyframes radarPulse {
+    0% {
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.12;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+    }
+  }
+
+  /* ── Brand panel entrance animations ── */
+  .logoMounted {
+    transition: opacity 800ms var(--login-ease-out) 200ms,
+                transform 800ms var(--login-ease-out) 200ms;
+  }
+
+  .dividerMounted {
+    transition: width 600ms var(--login-ease-out) 600ms;
+  }
+
+  .titleMounted {
+    transition: opacity 600ms var(--login-ease-out) 800ms,
+                transform 600ms var(--login-ease-out) 800ms;
+  }
+
+  .taglineMounted {
+    transition: opacity 600ms var(--login-ease-out) 1000ms,
+                transform 600ms var(--login-ease-out) 1000ms;
+  }
+
+  .featureMounted1 {
+    transition: opacity 500ms var(--login-ease-out) 1200ms,
+                transform 500ms var(--login-ease-out) 1200ms;
+  }
+
+  .featureMounted2 {
+    transition: opacity 500ms var(--login-ease-out) 1350ms,
+                transform 500ms var(--login-ease-out) 1350ms;
+  }
+
+  .featureMounted3 {
+    transition: opacity 500ms var(--login-ease-out) 1500ms,
+                transform 500ms var(--login-ease-out) 1500ms;
+  }
+
+  /* ── Form panel top line draw ── */
+  .pageMounted .formPanel::before {
+    transition: transform 800ms var(--login-ease-out) 300ms;
+  }
+
+  /* ── Form element staggered entrance ── */
+  .stagger1 {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms var(--login-ease-out) 300ms,
+                transform 500ms var(--login-ease-out) 300ms;
+  }
+  .stagger2 {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms var(--login-ease-out) 380ms,
+                transform 500ms var(--login-ease-out) 380ms;
+  }
+  .stagger3 {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms var(--login-ease-out) 460ms,
+                transform 500ms var(--login-ease-out) 460ms;
+  }
+  .stagger4 {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms var(--login-ease-out) 540ms,
+                transform 500ms var(--login-ease-out) 540ms;
+  }
+  .stagger5 {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms var(--login-ease-out) 620ms,
+                transform 500ms var(--login-ease-out) 620ms;
+  }
+  .stagger6 {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms var(--login-ease-out) 700ms,
+                transform 500ms var(--login-ease-out) 700ms;
+  }
+  .stagger7 {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 500ms var(--login-ease-out) 780ms,
+                transform 500ms var(--login-ease-out) 780ms;
+  }
+
+  /* ── Input focus micro-interaction (scale) ── */
+  .input:focus {
+    transform: scale(1.01);
+  }
+
+  /* ── Label subtle lift on focus ── */
+  .field:focus-within .label {
+    transform: translateY(-1px);
+    transition: transform 200ms var(--login-ease-out);
+  }
+
+  /* ── Submit button shimmer ── */
+  .submitBtn::before {
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  .submitBtn:hover:not(:disabled)::before {
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  /* ── Submit loading pulse glow ── */
+  .submitLoading {
+    animation: loadingPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes loadingPulse {
+    0%, 100% {
+      box-shadow:
+        0 0 0 0 rgba(42, 90, 140, 0),
+        0 1px 3px rgba(15, 27, 51, 0.3);
+    }
+    50% {
+      box-shadow:
+        0 0 0 6px rgba(42, 90, 140, 0.15),
+        0 1px 3px rgba(15, 27, 51, 0.3);
+    }
+  }
+
+  /* ── Button arrow hover ── */
+  .btnArrow {
+    transition: transform 300ms var(--login-ease-spring);
+  }
+
+  .submitBtn:hover:not(:disabled) .btnArrow {
+    transform: translateX(4px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 7: Reduced Motion Fallback
+   Description: When user prefers reduced motion, all animations are
+                disabled and elements render in their final visible
+                state immediately. Decorative effects are hidden.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .logoMounted { opacity: 1; transform: translateY(0); }
+  .dividerMounted { width: 48px; }
+  .titleMounted { opacity: 1; transform: translateY(0); }
+  .taglineMounted { opacity: 1; transform: translateY(0); }
+  .featureMounted1,
+  .featureMounted2,
+  .featureMounted3 { opacity: 1; transform: translateX(0); }
+
+  .stagger1, .stagger2, .stagger3, .stagger4,
+  .stagger5, .stagger6, .stagger7 {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .pageMounted .formPanel::before {
+    transform: scaleX(1);
+  }
+
+  .scanLine,
+  .dataStreams,
+  .radarContainer { display: none; }
+
+  .particleCore { opacity: 0.4; }
+  .particleGlow { opacity: 0.15; }
+  .connLine { opacity: 0.6; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   SECTION 8: Responsive Breakpoints
+   Description: Adapts layout for tablet (<=1024px), mobile (<=768px),
+                and small mobile (<=400px). Mobile hides the brand
+                panel and shows a compact mobile logo above the form.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 8a: Tablet (<=1024px) — Narrower brand panel ── */
+
+@media (max-width: 1024px) {
+  .brandPanel {
+    width: 40%;
+    min-width: 360px;
+  }
+
+  .brandContent {
+    padding: 48px 40px;
+  }
+
+  .brandLogo {
+    width: 280px;
+    margin-bottom: 32px;
+  }
+
+  .brandTitle {
+    font-size: 20px;
+  }
+
+  .brandTagline {
+    font-size: 14px;
+  }
+
+  .radarContainer {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+/* ── 8b: Mobile (<=768px) — Stacked layout, brand panel hidden ── */
+
+@media (max-width: 768px) {
+  .page {
+    flex-direction: column;
+  }
+
+  /* Hide the brand panel on mobile */
+  .brandPanel {
+    display: none;
+  }
+
+  .formPanel {
+    min-height: 100vh;
+    padding: 32px 24px;
+    align-items: flex-start;
+    padding-top: 48px;
+    /* Give mobile the navy top accent to maintain brand presence */
+    background: linear-gradient(
+      180deg,
+      var(--login-navy) 0px,
+      var(--login-navy) 120px,
+      var(--surface) 120px,
+      var(--surface) 100%
+    );
+  }
+
+  .formPanel::before {
+    display: none;
+  }
+
+  .formParticleNetwork {
+    display: none;
+  }
+
+  .formContainer {
+    max-width: 100%;
+  }
+
+  /* Show mobile logo */
+  .mobileLogo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+
+  .mobileLogoImg {
+    width: 180px;
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.3));
+  }
+
+  .formHeader {
+    margin-bottom: 28px;
+  }
+
+  .formTitle {
+    font-size: 26px;
+  }
+
+  .formSubtitle {
+    font-size: 14px;
+  }
+
+  .form {
+    gap: 20px;
+  }
+
+  .footer {
+    margin-top: 36px;
+  }
+}
+
+@media (max-width: 400px) {
+  .formPanel {
+    padding: 24px 20px;
+    padding-top: 40px;
+  }
+
+  .mobileLogoImg {
+    width: 160px;
+  }
+
+  .formTitle {
+    font-size: 24px;
+  }
+
+  .options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .forgotLink {
+    min-height: 36px;
+  }
+}

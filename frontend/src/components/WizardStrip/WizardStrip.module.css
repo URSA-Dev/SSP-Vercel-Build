@@ -1,0 +1,92 @@
+.wizardStrip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--surface-4);
+  overflow-x: auto;
+}
+
+.wzStep {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--r-full);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-5);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all .15s;
+  border: none;
+  background: none;
+  font-family: var(--sans);
+}
+
+.wzStep:hover {
+  color: var(--ink-3);
+}
+
+.wzActive {
+  background: var(--uscg);
+  color: #fff;
+}
+
+.wzActive:hover {
+  color: #fff;
+}
+
+.wzDone {
+  color: var(--green);
+}
+
+.wzNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--surface-3);
+  color: var(--ink-4);
+}
+
+.wzActive .wzNum {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.wzDone .wzNum {
+  background: var(--green-2);
+  color: var(--green);
+}
+
+.wzConnector {
+  width: 20px;
+  height: 1px;
+  background: var(--surface-4);
+  flex-shrink: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .wizardStrip {
+    padding: 12px 16px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .wizardStrip::-webkit-scrollbar { display: none; }
+  .wzStep { padding: 6px 12px; font-size: 11px; min-height: 44px; }
+  .wzNum { width: 20px; height: 20px; font-size: 10px; }
+  .wzConnector { width: 12px; }
+}
+
+@media (max-width: 480px) {
+  .wizardStrip { padding: 10px 12px; }
+  .wzStep { padding: 6px 8px; gap: 4px; }
+  .wzConnector { width: 8px; }
+}

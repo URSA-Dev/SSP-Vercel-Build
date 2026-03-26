@@ -1,0 +1,30 @@
+/* ── Workload Board Page ── */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ── Table ── */
+.tableCard {
+  padding: 0;
+}
+
+.analystName {
+  font-weight: 500;
+}
+
+.hideOnMobile {}
+@media (max-width: 768px) {
+  .hideOnMobile { display: none; }
+  .pageHeader { flex-direction: column; }
+}

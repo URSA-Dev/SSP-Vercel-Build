@@ -1,0 +1,76 @@
+.slaCard {
+  background: var(--surface);
+  border: 1px solid var(--ink-6);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  text-align: center;
+  box-shadow: var(--sh-sm);
+}
+
+.slaRingWrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.slaRing {
+  transform: rotate(-90deg);
+}
+
+.slaBg {
+  fill: none;
+  stroke: var(--surface-3);
+  stroke-width: 6;
+}
+
+.slaFill {
+  fill: none;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset .6s ease;
+}
+
+.ok .slaFill {
+  stroke: var(--green);
+}
+
+.warn .slaFill {
+  stroke: var(--amber);
+}
+
+.over .slaFill {
+  stroke: var(--red);
+}
+
+.slaTime {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.slaLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+
+.slaSubtitle {
+  font-size: 11px;
+  color: var(--ink-5);
+  margin-top: 2px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .slaCard { padding: var(--card-pad); }
+  .slaTime { font-size: 16px; }
+  .slaLabel { font-size: 11px; }
+  .slaRingWrap { margin-bottom: 8px; }
+}
+
+@media (max-width: 480px) {
+  .slaCard { padding: 12px; }
+  .slaTime { font-size: 14px; }
+  .slaLabel { font-size: 10px; }
+}

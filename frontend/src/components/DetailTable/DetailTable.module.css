@@ -1,0 +1,43 @@
+.dtbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.dtbl tr {
+  border-bottom: 1px solid var(--surface-4);
+}
+
+.dtbl tr:last-child {
+  border-bottom: none;
+}
+
+.dtbl td {
+  padding: 8px 0;
+  vertical-align: top;
+}
+
+.dtblLabel {
+  font-weight: 600;
+  color: var(--ink-3);
+  width: 140px;
+  white-space: nowrap;
+  padding-right: 16px;
+}
+
+.dtblValue {
+  color: var(--ink-2);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .dtbl { font-size: 12px; }
+  .dtblLabel { width: 120px; padding-right: 12px; }
+}
+
+@media (max-width: 480px) {
+  .dtbl tr { display: flex; flex-direction: column; padding: 8px 0; }
+  .dtbl td { padding: 2px 0; }
+  .dtblLabel { width: auto; white-space: normal; padding-right: 0; font-size: 11px; }
+  .dtblValue { font-size: 13px; }
+}

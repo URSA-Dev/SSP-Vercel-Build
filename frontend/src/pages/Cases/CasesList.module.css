@@ -1,0 +1,110 @@
+/* ── Cases List Page ── */
+
+.loadingWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.errorWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 300px;
+}
+
+.errorText {
+  color: var(--red);
+  font-weight: 600;
+}
+
+/* ── Search Box ── */
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  padding: 8px 12px;
+}
+
+.searchBox:focus-within {
+  border-color: var(--uscg);
+  box-shadow: 0 0 0 3px rgba(74, 92, 47, 0.1);
+}
+
+.searchIcon {
+  color: var(--ink-5);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  min-width: 220px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  background: transparent;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--ink-5);
+}
+
+/* ── Table Card ── */
+.tableCard {
+  padding: 0;
+}
+
+/* ── Sortable headers ── */
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortable:hover {
+  color: var(--uscg);
+}
+
+/* ── Case Number cell ── */
+.caseNum {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.surgeBadge {
+  margin-left: 6px;
+  font-size: 9px;
+}
+
+/* ── Date cell ── */
+.dateCell {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* ── Empty state row ── */
+.emptyRow {
+  text-align: center;
+  color: var(--ink-5);
+  padding: 40px 16px;
+  font-size: 14px;
+}
+
+/* ── Hide non-critical columns on mobile ── */
+.hideOnMobile {}
+@media (max-width: 768px) {
+  .hideOnMobile { display: none; }
+  .searchInput {
+    min-width: 140px;
+  }
+}
