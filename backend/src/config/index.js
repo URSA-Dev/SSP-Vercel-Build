@@ -4,6 +4,7 @@ dotenv.config();
 const config = {
   port: parseInt(process.env.PORT, 10) || 3001,
   nodeEnv: process.env.NODE_ENV || 'development',
+  logLevel: process.env.LOG_LEVEL || 'info',
 
   db: {
     host: process.env.DB_HOST || 'localhost',
@@ -20,11 +21,33 @@ const config = {
 
   upload: {
     dir: process.env.UPLOAD_DIR || './uploads',
-    maxFileSize: parseInt(process.env.MAX_FILE_SIZE, 10) || 52428800, // 50MB
+    maxFileSize: parseInt(process.env.MAX_FILE_SIZE, 10) || 52428800,
+    allowedMimeTypes: (process.env.ALLOWED_MIME_TYPES || 'application/pdf,image/jpeg,image/png,text/plain').split(','),
   },
 
   anthropic: {
     apiKey: process.env.ANTHROPIC_API_KEY || '',
+    model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-20250514',
+    maxTokens: parseInt(process.env.ANTHROPIC_MAX_TOKENS, 10) || 4096,
+    temperature: parseFloat(process.env.ANTHROPIC_TEMPERATURE) || 0.3,
+  },
+
+  openai: {
+    apiKey: process.env.OPENAI_API_KEY || '',
+    embeddingModel: process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small',
+    embeddingDimensions: 1536,
+    batchSize: 100,
+  },
+
+  redis: {
+    url: process.env.REDIS_URL || 'redis://localhost:6379',
+  },
+
+  ai: {
+    maxConcurrentTasks: parseInt(process.env.AI_MAX_CONCURRENT_TASKS, 10) || 5,
+    defaultTopK: parseInt(process.env.AI_DEFAULT_TOP_K, 10) || 5,
+    similarityThreshold: parseFloat(process.env.AI_SIMILARITY_THRESHOLD) || 0.7,
+    dailyCostLimitUsd: parseFloat(process.env.AI_DAILY_COST_LIMIT_USD) || 500.0,
   },
 };
 

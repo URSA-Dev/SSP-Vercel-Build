@@ -1,9 +1,10 @@
 import app from './app.js';
 import config from './config/index.js';
+import logger from './utils/logger.js';
 
-const { port } = config;
+const log = logger.child({ module: 'server' });
 
-app.listen(port, () => {
-  console.log(`SSP API server running on port ${port}`);
-  console.log(`Health check: http://localhost:${port}/api/v1/health`);
+app.listen(config.port, () => {
+  log.info({ port: config.port, env: config.nodeEnv }, 'SSP API server running');
+  log.info({ url: `http://localhost:${config.port}/api/v1/health` }, 'Health check available');
 });

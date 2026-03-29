@@ -1,4 +1,7 @@
 import db from '../config/database.js';
+import logger from '../utils/logger.js';
+
+const log = logger.child({ module: 'audit' });
 
 /**
  * Audit logging middleware.  Intercepts res.json() on mutating HTTP
@@ -30,7 +33,7 @@ export function auditLog(entityType) {
             ip_address: req.ip,
           });
         } catch (err) {
-          console.error('Audit log error:', err.message);
+          log.error({ err }, 'Audit log write failed');
         }
       }
 
