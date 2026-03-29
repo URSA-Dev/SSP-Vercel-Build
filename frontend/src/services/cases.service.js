@@ -612,18 +612,14 @@ export async function createCase(data) {
   }
   const seq = String(mockCases.length + 149).padStart(5, '0');
   const newCase = {
-    id: `DOW-2025-${seq}`,
     subjectName: data.subjectName || 'Unknown',
     subjectLastName: data.subjectLastName || 'Unknown',
     subjectFirstInitial: data.subjectFirstInitial || '?',
     caseType: data.caseType || 'T3',
-    status: 'RECEIVED',
     priority: data.priority || 'NORMAL',
     assignedTo: data.assignedTo || 'Smith, A.',
     receivedDate: new Date().toISOString(),
     suspenseDate: data.suspenseDate || new Date(Date.now() + 14 * dayMs).toISOString(),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
     issues: [],
     docs: [],
     comms: [],
