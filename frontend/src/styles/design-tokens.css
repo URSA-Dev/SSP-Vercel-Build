@@ -43,8 +43,8 @@
   --navy:       #003087;
 
   /* Typography */
-  --sans:   'Roboto', system-ui, sans-serif;
-  --mono:   'Roboto Mono', monospace;
+  --sans:   'Outfit', system-ui, sans-serif;
+  --mono:   'JetBrains Mono', monospace;
 
   /* Border Radius */
   --r-xs:   4px;
