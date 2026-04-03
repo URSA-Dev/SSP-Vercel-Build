@@ -50,6 +50,7 @@ coverage/
 .nyc_output/
 
 # Claude Code AI tooling (local only — not useful on remote)
+CLAUDE.md
 .claude/
 .mcp.json
 
