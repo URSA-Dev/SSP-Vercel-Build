@@ -1,6 +1,15 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+const isDev = (process.env.NODE_ENV || 'development') === 'development';
+
+function requireEnv(name, devDefault) {
+  const value = process.env[name];
+  if (value) return value;
+  if (isDev && devDefault !== undefined) return devDefault;
+  throw new Error(`Missing required environment variable: ${name}`);
+}
+
 const config = {
   port: parseInt(process.env.PORT, 10) || 3001,
   nodeEnv: process.env.NODE_ENV || 'development',
@@ -11,12 +20,12 @@ const config = {
     port: parseInt(process.env.DB_PORT, 10) || 5432,
     name: process.env.DB_NAME || 'ssp',
     user: process.env.DB_USER || 'ssp',
-    password: process.env.DB_PASS || 'ssp_dev_password',
+    password: requireEnv('DB_PASS', 'ssp_dev_password'),
   },
 
   jwt: {
-    secret: process.env.JWT_SECRET || 'change-me-in-production',
-    expiresIn: process.env.JWT_EXPIRES_IN || '24h',
+    secret: requireEnv('JWT_SECRET', 'dev-only-secret-do-not-use-in-prod'),
+    expiresIn: process.env.JWT_EXPIRES_IN || '2h',
   },
 
   upload: {

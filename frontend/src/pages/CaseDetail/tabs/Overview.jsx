@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { updateCase } from '../../../services/cases.service';
+import { updateCaseStatus } from '../../../services/cases.service';
 import { statusBadge, priorityBadge } from '../../../utils/format';
 import { fmtDate } from '../../../utils/dates';
-import { CASE_STATUSES } from '../../../utils/constants';
+import { STATUS_TRANSITIONS } from '../../../utils/constants';
 import Badge from '../../../components/Badge/Badge';
 import Button from '../../../components/Button/Button';
 import { Card, CardHead, CardTitle, CardBody } from '../../../components/Card/Card';
@@ -47,13 +47,15 @@ function progressStatus(caseData) {
 }
 
 function Overview({ caseData, onRefresh, onTabChange }) {
-  const [newStatus, setNewStatus] = useState(caseData.status);
+  const validTransitions = STATUS_TRANSITIONS[caseData.status] || [];
+  const [newStatus, setNewStatus] = useState(validTransitions[0] || '');
   const [saving, setSaving] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const toast = useToast();
 
   const sb = statusBadge(caseData.status);
   const pb = priorityBadge(caseData.priority);
+  const isTerminal = validTransitions.length === 0;
 
   const disp = caseData.disposition || caseData.memo?.disposition;
 
@@ -83,11 +85,17 @@ function Overview({ caseData, onRefresh, onTabChange }) {
     setConfirmOpen(false);
     setSaving(true);
     try {
-      await updateCase(caseData.id, { status: newStatus });
+      await updateCaseStatus(caseData.id, newStatus);
       await onRefresh();
       toast(`Status updated to ${statusBadge(newStatus).label}`, 'success');
-    } catch {
-      toast('Failed to update status', 'error');
+    } catch (err) {
+      const detail = err?.response?.data?.error;
+      if (detail?.code === 'INVALID_TRANSITION' && detail?.details?.allowed) {
+        const allowed = detail.details.allowed.map((s) => statusBadge(s).label).join(', ');
+        toast(`Invalid transition. Allowed: ${allowed}`, 'error');
+      } else {
+        toast(detail?.message || 'Failed to update status', 'error');
+      }
     } finally {
       setSaving(false);
     }
@@ -104,31 +112,37 @@ function Overview({ caseData, onRefresh, onTabChange }) {
           <CardBody>
             <DetailTable rows={infoRows} />
             <div className="flex aic gap-2 mt-4">
-              <select
-                value={newStatus}
-                onChange={(e) => setNewStatus(e.target.value)}
-                style={{
-                  padding: '6px 10px',
-                  borderRadius: 'var(--r-sm)',
-                  border: '1px solid var(--bdr)',
-                  fontSize: '13px',
-                  fontFamily: 'var(--sans)',
-                }}
-              >
-                {CASE_STATUSES.map((s) => (
-                  <option key={s} value={s}>
-                    {statusBadge(s).label}
-                  </option>
-                ))}
-              </select>
-              <Button
-                variant="primary"
-                size="sm"
-                disabled={saving || newStatus === caseData.status}
-                onClick={handleUpdateClick}
-              >
-                {saving ? 'Updating...' : 'Update Status'}
-              </Button>
+              {isTerminal ? (
+                <Badge variant={sb.variant}>{sb.label} — No further transitions</Badge>
+              ) : (
+                <>
+                  <select
+                    value={newStatus}
+                    onChange={(e) => setNewStatus(e.target.value)}
+                    style={{
+                      padding: '6px 10px',
+                      borderRadius: 'var(--r-sm)',
+                      border: '1px solid var(--bdr)',
+                      fontSize: '13px',
+                      fontFamily: 'var(--sans)',
+                    }}
+                  >
+                    {validTransitions.map((s) => (
+                      <option key={s} value={s}>
+                        {statusBadge(s).label}
+                      </option>
+                    ))}
+                  </select>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    disabled={saving || !newStatus}
+                    onClick={handleUpdateClick}
+                  >
+                    {saving ? 'Updating...' : 'Update Status'}
+                  </Button>
+                </>
+              )}
             </div>
           </CardBody>
         </Card>

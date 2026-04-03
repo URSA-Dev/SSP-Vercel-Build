@@ -8,39 +8,107 @@
 }
 
 .pageHeader h1 {
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: 700;
-  color: var(--ink, #1a1a2e);
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
   margin: 0 0 4px;
 }
 
 .subtitle {
-  color: var(--ink-light, #6b7280);
-  font-size: 0.875rem;
+  color: var(--ink-5);
+  font-size: 13px;
   margin: 0;
 }
 
 .wizardWrap {
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
 .stepContent {
-  margin-top: 8px;
+  margin-top: 0;
 }
 
+/* ── Step Card — wraps each wizard step ── */
+.stepCard {
+  background: var(--surface);
+  border: 1px solid var(--ink-6);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-sm);
+  padding: 20px;
+}
+
+/* ── Form Section Title — "Step 1 — Subject & Receipt" ── */
+.sectionTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--surface-4);
+  margin-bottom: 16px;
+}
+
+/* ── Navigation Row — bottom of each step ── */
 .navRow {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 24px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border, #e5e7eb);
+  margin-top: 22px;
+  gap: 8px;
 }
 
-.navRight {
-  display: flex;
-  gap: 8px;
-  margin-left: auto;
+/* ── Form group spacing ── */
+.formSection {
+  margin-bottom: 18px;
+}
+
+/* ── Suspense Info Panel (Step 3) ── */
+.suspensePanel {
+  background: var(--surface-2);
+  border: 1px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  padding: 16px;
+  margin-bottom: 18px;
+}
+
+.suspensePanelTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.suspenseGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.suspenseItem h4 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-3);
+  margin: 0 0 4px;
+}
+
+.suspenseItem p {
+  font-size: 12px;
+  color: var(--ink-5);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ── Divider ── */
+.divider {
+  height: 1px;
+  background: var(--surface-4);
+  border: none;
+  margin: 20px 0;
 }
 
 /* ── Responsive — Tablet ── */
@@ -52,16 +120,19 @@
 @media (max-width: 768px) {
   .newCase { padding: 0 var(--page-pad); }
   .pageHeader { margin-bottom: 16px; }
-  .pageHeader h1 { font-size: 1.25rem; }
-  .subtitle { font-size: 0.8125rem; }
+  .pageHeader h1 { font-size: 20px; }
+  .subtitle { font-size: 12px; }
   .wizardWrap { margin-bottom: 20px; }
-  .navRow { margin-top: 16px; padding-top: 12px; }
+  .stepCard { padding: 16px; }
+  .navRow { margin-top: 16px; }
+  .suspenseGrid { grid-template-columns: 1fr; gap: 12px; }
 }
 
 /* ── Responsive — Small Mobile ── */
 @media (max-width: 480px) {
   .newCase { padding: 0 12px; }
-  .pageHeader h1 { font-size: 1.125rem; }
+  .pageHeader h1 { font-size: 18px; }
+  .stepCard { padding: 14px; border-radius: var(--r); }
   .navRow { flex-wrap: wrap; gap: 8px; }
-  .navRight { width: 100%; justify-content: flex-end; }
+  .navRow button { flex: 1; min-width: 120px; justify-content: center; }
 }

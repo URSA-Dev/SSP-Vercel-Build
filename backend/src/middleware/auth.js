@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/index.js';
 import db from '../config/database.js';
+import logger from '../utils/logger.js';
+
+const log = logger.child({ module: 'auth' });
 
 /**
  * Middleware that verifies a JWT Bearer token and attaches the
@@ -45,7 +48,7 @@ export function authenticate(req, res, next) {
         next();
       })
       .catch((err) => {
-        console.error('Auth DB lookup failed:', err.message);
+        log.error({ err }, 'Auth DB lookup failed');
         return res.status(500).json({
           error: { code: 'INTERNAL_ERROR', message: 'Internal server error' },
         });

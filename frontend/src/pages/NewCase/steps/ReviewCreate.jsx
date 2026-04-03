@@ -7,6 +7,7 @@ import { CASE_TYPES } from '../../../utils/constants';
 import { fmtDate } from '../../../utils/dates';
 import { priorityBadge } from '../../../utils/format';
 import { useToast } from '../../../components/Toast/toast-context';
+import styles from '../NewCase.module.css';
 
 function ReviewCreate({ data, onBack, onCreate }) {
   const [creating, setCreating] = useState(false);
@@ -29,31 +30,31 @@ function ReviewCreate({ data, onBack, onCreate }) {
   const rows = [
     {
       label: 'Subject',
-      value: `${data.subjectLastName}, ${data.subjectFirstInitial.toUpperCase()}.`,
+      value: `${data.subjectLastName || '\u2014'}, ${data.subjectFirstInitial?.toUpperCase() || '\u2014'}.`,
     },
     {
-      label: 'Investigation Type',
+      label: 'Case Type',
       value: typeInfo ? (
         <Badge variant="blue">{typeInfo.code} — {typeInfo.name}</Badge>
       ) : (
-        '—'
+        <span style={{ color: 'var(--ink-5)' }}>&mdash;</span>
       ),
     },
     {
       label: 'Date Received',
-      value: fmtDate(data.receivedDate),
+      value: fmtDate(data.receivedDate) || '\u2014',
     },
     {
       label: 'Priority',
-      value: <Badge variant={pb.variant}>{pb.label}</Badge>,
+      value: pb ? <Badge variant={pb.variant}>{pb.label}</Badge> : '\u2014',
     },
     {
       label: 'Surge',
-      value: data.surgeFlag ? <Badge variant="red">SURGE</Badge> : 'No',
+      value: data.surgeFlag ? <Badge variant="violet">Flagged as Surge</Badge> : 'No',
     },
     {
       label: 'Assigned To',
-      value: data.assignedTo,
+      value: data.assignedTo || 'Smith, A.',
     },
     {
       label: 'Notes',
@@ -62,18 +63,19 @@ function ReviewCreate({ data, onBack, onCreate }) {
   ];
 
   return (
-    <div>
-      <Alert variant="green" icon="&#10003;" title="Ready to Create">
-        Review the information below. Once created, the case will be assigned and suspense
-        dates will be automatically calculated.
+    <div className={styles.stepCard}>
+      <div className={styles.sectionTitle}>Step 4 — Review &amp; Create</div>
+
+      <Alert variant="green" icon="&#10003;" title="Ready to create">
+        Review details below, then click Create Case to start both Suspense clocks.
       </Alert>
 
       <DetailTable rows={rows} />
 
-      <hr style={{ border: 'none', borderTop: '1px solid var(--border, #e5e7eb)', margin: '24px 0' }} />
+      <div className={styles.divider} />
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Button variant="ghost" onClick={onBack} disabled={creating}>
+      <div className={styles.navRow}>
+        <Button variant="secondary" onClick={onBack} disabled={creating}>
           &larr; Back
         </Button>
         <Button variant="primary" size="lg" onClick={handleCreate} disabled={creating}>

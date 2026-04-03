@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import { auditLog } from '../middleware/audit.js';
 import { paginate } from '../middleware/pagination.js';
+import { requireRole } from '../middleware/require-role.js';
 import {
   listRecords,
   getStats,
@@ -21,6 +22,6 @@ router.get('/stats', getStats);
 router.get('/:id', getRecord);
 router.post('/', auditLog('fcl'), createRecord);
 router.put('/:id', auditLog('fcl'), updateRecord);
-router.delete('/:id', auditLog('fcl'), deleteRecord);
+router.delete('/:id', requireRole('SUPERVISOR', 'ADMIN'), auditLog('fcl'), deleteRecord);
 
 export default router;

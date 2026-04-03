@@ -21,6 +21,7 @@ function addBusinessDays(date, days) {
 
 /**
  * Valid status transitions map.
+ * SYNC: frontend/src/utils/constants.js — STATUS_TRANSITIONS
  */
 const STATUS_TRANSITIONS = {
   RECEIVED: ['ASSIGNED', 'ON_HOLD', 'CANCELLED'],

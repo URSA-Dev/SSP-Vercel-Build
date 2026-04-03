@@ -84,8 +84,16 @@ export async function createViolation(req, res, next) {
 
     const violation_number = await ViolationModel.getNextViolationNumber();
 
+    const allowed = ['violation_date', 'category', 'subcategory', 'subject_name',
+      'clearance', 'location', 'severity', 'status', 'sso_notified', 'sso_date',
+      'adj_impact', 'description', 'actions_taken', 'reported_by', 'closed_date',
+      'ci_referral', 'ci_note'];
+    const fields = Object.fromEntries(
+      Object.entries(req.body).filter(([k]) => allowed.includes(k)),
+    );
+
     const record = await ViolationModel.create({
-      ...req.body,
+      ...fields,
       violation_number,
     });
 
@@ -107,7 +115,13 @@ export async function updateViolation(req, res, next) {
       throw createError(404, 'Violation not found', 'VIOLATION_NOT_FOUND');
     }
 
-    const updates = { ...req.body };
+    const allowed = ['violation_date', 'category', 'subcategory', 'subject_name',
+      'clearance', 'location', 'severity', 'status', 'sso_notified', 'sso_date',
+      'adj_impact', 'description', 'actions_taken', 'reported_by', 'closed_date',
+      'ci_referral', 'ci_note'];
+    const updates = Object.fromEntries(
+      Object.entries(req.body).filter(([k]) => allowed.includes(k)),
+    );
 
     // Auto-set closed_date when status transitions to CLOSED
     if (updates.status === 'CLOSED' && existing.status !== 'CLOSED') {

@@ -80,8 +80,14 @@ export async function createRecord(req, res, next) {
 
     const fcl_id = await FclModel.getNextFclId();
 
+    const allowed = ['entity_name', 'cage_code', 'clearance_level', 'status',
+      'sponsor', 'expires_at', 'fso_name', 'employee_count', 'last_review'];
+    const fields = Object.fromEntries(
+      Object.entries(req.body).filter(([k]) => allowed.includes(k)),
+    );
+
     const record = await FclModel.create({
-      ...req.body,
+      ...fields,
       fcl_id,
     });
 
@@ -103,7 +109,13 @@ export async function updateRecord(req, res, next) {
       throw createError(404, 'FCL record not found', 'FCL_NOT_FOUND');
     }
 
-    const record = await FclModel.update(req.params.id, req.body);
+    const allowed = ['entity_name', 'cage_code', 'clearance_level', 'status',
+      'sponsor', 'expires_at', 'fso_name', 'employee_count', 'last_review'];
+    const fields = Object.fromEntries(
+      Object.entries(req.body).filter(([k]) => allowed.includes(k)),
+    );
+
+    const record = await FclModel.update(req.params.id, fields);
 
     res.json({ data: record });
   } catch (err) {

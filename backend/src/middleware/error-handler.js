@@ -1,3 +1,4 @@
+import config from '../config/index.js';
 import logger from '../utils/logger.js';
 
 const log = logger.child({ module: 'error-handler' });
@@ -16,7 +17,7 @@ export function errorHandler(err, req, res, _next) {
       message,
       ...(err.field && { field: err.field }),
       ...(err.details && { details: err.details }),
-      ...(process.env.NODE_ENV === 'development' && status === 500 && { stack: err.stack }),
+      ...(config.nodeEnv === 'development' && status === 500 && { stack: err.stack }),
     },
   });
 }

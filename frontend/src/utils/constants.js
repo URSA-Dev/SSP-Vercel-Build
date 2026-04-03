@@ -1,10 +1,13 @@
 export const CASE_TYPES = [
-  { code: 'T1', name: 'Tier 1', desc: 'Low public trust' },
-  { code: 'T2', name: 'Tier 2', desc: 'Moderate public trust' },
-  { code: 'T3', name: 'Tier 3', desc: 'Secret — Most common' },
-  { code: 'T5', name: 'Tier 5', desc: 'Top Secret / SCI' },
-  { code: 'PPR', name: 'PPR', desc: 'Periodic review' },
-  { code: 'LBI', name: 'LBI', desc: 'Limited background' },
+  { code: 'PVP', name: 'Personal Vetting Program (PVP)' },
+  { code: 'SEAD3', name: 'SEAD 3 Reporting' },
+  { code: 'INDOC', name: 'INDOCs + Debriefs' },
+  { code: 'FTRV', name: 'Foreign Travel' },
+  { code: 'INTHR', name: 'Insider Threat' },
+  { code: 'SINC', name: 'Security Incident(s)' },
+  { code: 'SAP', name: 'SAP Support' },
+  { code: 'TRAIN', name: 'Training' },
+  { code: 'VAR', name: 'VARs' },
 ];
 
 export const CASE_STATUSES = [
@@ -54,3 +57,20 @@ export const MITIGATION_TYPES = [
 ];
 
 export const DISPOSITIONS = ['FAVORABLE', 'FAVORABLE_WITH_COMMENT', 'UNFAVORABLE', 'DEFERRED', 'REFERRED'];
+
+// SYNC: backend/src/controllers/cases.controller.js:25-39
+export const STATUS_TRANSITIONS = {
+  RECEIVED: ['ASSIGNED', 'ON_HOLD', 'CANCELLED'],
+  ASSIGNED: ['IN_REVIEW', 'ON_HOLD', 'CANCELLED'],
+  IN_REVIEW: ['ISSUES_IDENTIFIED', 'MEMO_DRAFT', 'ON_HOLD', 'CANCELLED'],
+  ISSUES_IDENTIFIED: ['MEMO_DRAFT', 'IN_REVIEW', 'ON_HOLD'],
+  MEMO_DRAFT: ['QA_REVIEW', 'IN_REVIEW', 'ON_HOLD'],
+  QA_REVIEW: ['QA_REVISION', 'FINAL_REVIEW'],
+  QA_REVISION: ['QA_REVIEW', 'MEMO_DRAFT'],
+  FINAL_REVIEW: ['SUBMITTED', 'QA_REVISION'],
+  SUBMITTED: ['CLOSED_FAVORABLE', 'CLOSED_UNFAVORABLE'],
+  ON_HOLD: ['RECEIVED', 'ASSIGNED', 'IN_REVIEW'],
+  CLOSED_FAVORABLE: [],
+  CLOSED_UNFAVORABLE: [],
+  CANCELLED: ['RECEIVED'],
+};

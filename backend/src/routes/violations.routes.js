@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import { auditLog } from '../middleware/audit.js';
 import { paginate } from '../middleware/pagination.js';
+import { requireRole } from '../middleware/require-role.js';
 import {
   listViolations,
   getStats,
@@ -21,6 +22,6 @@ router.get('/stats', getStats);
 router.get('/:id', getViolation);
 router.post('/', auditLog('violation'), createViolation);
 router.put('/:id', auditLog('violation'), updateViolation);
-router.delete('/:id', auditLog('violation'), deleteViolation);
+router.delete('/:id', requireRole('SUPERVISOR', 'ADMIN'), auditLog('violation'), deleteViolation);
 
 export default router;

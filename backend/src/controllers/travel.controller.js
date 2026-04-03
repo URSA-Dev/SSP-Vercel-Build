@@ -80,8 +80,15 @@ export async function createRecord(req, res, next) {
 
     const travel_id = await TravelModel.getNextTravelId();
 
+    const allowed = ['subject_name', 'clearance', 'countries', 'depart_date',
+      'return_date', 'purpose', 'briefed', 'debriefed', 'risk_level', 'status',
+      'referral_notes'];
+    const fields = Object.fromEntries(
+      Object.entries(req.body).filter(([k]) => allowed.includes(k)),
+    );
+
     const record = await TravelModel.create({
-      ...req.body,
+      ...fields,
       travel_id,
     });
 
@@ -103,7 +110,14 @@ export async function updateRecord(req, res, next) {
       throw createError(404, 'Travel record not found', 'TRAVEL_NOT_FOUND');
     }
 
-    const record = await TravelModel.update(req.params.id, req.body);
+    const allowed = ['subject_name', 'clearance', 'countries', 'depart_date',
+      'return_date', 'purpose', 'briefed', 'debriefed', 'risk_level', 'status',
+      'referral_notes'];
+    const fields = Object.fromEntries(
+      Object.entries(req.body).filter(([k]) => allowed.includes(k)),
+    );
+
+    const record = await TravelModel.update(req.params.id, fields);
 
     res.json({ data: record });
   } catch (err) {

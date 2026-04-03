@@ -30,19 +30,6 @@ export const FILENAME_SANITIZE_RE = /[^\w\-. ]/g;
 /** Regex to detect path traversal attempts */
 export const PATH_TRAVERSAL_RE = /\.\./;
 
-/** Case status workflow transitions */
-export const CASE_STATUS_TRANSITIONS = {
-  DRAFT: ['OPEN'],
-  OPEN: ['IN_PROGRESS', 'CLOSED', 'CANCELLED'],
-  IN_PROGRESS: ['PENDING_REVIEW', 'ON_HOLD', 'CLOSED'],
-  PENDING_REVIEW: ['IN_PROGRESS', 'APPROVED', 'REJECTED'],
-  APPROVED: ['CLOSED'],
-  REJECTED: ['IN_PROGRESS'],
-  ON_HOLD: ['IN_PROGRESS', 'CLOSED'],
-  CLOSED: [],
-  CANCELLED: [],
-};
-
 /** Document status values */
 export const DOCUMENT_STATUS = {
   PENDING: 'pending',

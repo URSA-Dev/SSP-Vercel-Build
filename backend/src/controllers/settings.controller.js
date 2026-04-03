@@ -72,7 +72,8 @@ export async function setSetting(req, res, next) {
     }
 
     // Determine scope: user-level by default, tenant-level for admins
-    const effectiveScope = scope === 'tenant' && req.user.role === 'admin'
+    // SYNC: DB user_role enum uses UPPERCASE (ADMIN, SUPERVISOR, etc.)
+    const effectiveScope = scope === 'tenant' && req.user.role === 'ADMIN'
       ? 'tenant'
       : 'user';
 

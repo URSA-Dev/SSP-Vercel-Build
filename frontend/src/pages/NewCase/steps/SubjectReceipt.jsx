@@ -4,6 +4,7 @@ import Button from '../../../components/Button/Button';
 import Input from '../../../components/FormControls/Input';
 import Textarea from '../../../components/FormControls/Textarea';
 import FormGrid from '../../../components/FormControls/FormGrid';
+import styles from '../NewCase.module.css';
 
 function SubjectReceipt({ data, onChange, onNext, onCancel }) {
   const [errors, setErrors] = useState({});
@@ -28,57 +29,63 @@ function SubjectReceipt({ data, onChange, onNext, onCancel }) {
   }
 
   return (
-    <div>
-      <Alert variant="blue" icon="&#128274;" title="Minimal PII Policy">
-        Enter only the subject's last name and first initial. Do not enter full names,
-        SSNs, or other personally identifiable information in this form.
+    <div className={styles.stepCard}>
+      <div className={styles.sectionTitle}>Step 1 — Subject &amp; Case Receipt</div>
+
+      <Alert variant="blue" icon="&#8505;" title="Minimal PII Policy">
+        This system stores <strong>minimal PII</strong>. Enter last name and first initial only.
+        No SSNs, full names, or dates of birth.
       </Alert>
 
-      <FormGrid columns={2}>
-        <Input
-          label="Last Name"
-          required
-          value={data.subjectLastName}
-          onChange={(e) => onChange('subjectLastName', e.target.value)}
-          onBlur={() => handleBlur('subjectLastName')}
-          placeholder="e.g. Anderson"
-          error={showError('subjectLastName') ? 'Last name is required' : undefined}
-          hint={errors.subjectLastName}
-        />
-        <Input
-          label="First Initial"
-          required
-          value={data.subjectFirstInitial}
-          onChange={(e) => onChange('subjectFirstInitial', e.target.value.toUpperCase().slice(0, 1))}
-          onBlur={() => handleBlur('subjectFirstInitial')}
-          placeholder="e.g. R"
-          maxLength={1}
-          error={showError('subjectFirstInitial') ? 'First initial is required' : undefined}
-          hint={errors.subjectFirstInitial}
-        />
-      </FormGrid>
+      <div className={styles.formSection}>
+        <FormGrid columns={2}>
+          <Input
+            label="Subject Last Name"
+            required
+            value={data.subjectLastName}
+            onChange={(e) => onChange('subjectLastName', e.target.value)}
+            onBlur={() => handleBlur('subjectLastName')}
+            placeholder="Last name only"
+            error={showError('subjectLastName') ? 'Last name is required' : undefined}
+            hint={errors.subjectLastName}
+          />
+          <Input
+            label="First Initial"
+            required
+            value={data.subjectFirstInitial}
+            onChange={(e) => onChange('subjectFirstInitial', e.target.value.toUpperCase().slice(0, 1))}
+            onBlur={() => handleBlur('subjectFirstInitial')}
+            placeholder="A"
+            maxLength={1}
+            style={{ maxWidth: 90, textTransform: 'uppercase' }}
+            error={showError('subjectFirstInitial') ? 'First initial is required' : undefined}
+            hint="One letter only"
+          />
+        </FormGrid>
+      </div>
 
-      <FormGrid columns={2}>
+      <div className={styles.formSection}>
         <Input
           label="Date Materials Received"
           type="date"
+          required
           value={data.receivedDate}
           onChange={(e) => onChange('receivedDate', e.target.value)}
+          style={{ maxWidth: 240 }}
         />
-        <div />
-      </FormGrid>
+      </div>
 
       <Textarea
-        label="Initial Notes"
+        label="Initial Notes (Internal Only)"
         value={data.notes}
         onChange={(e) => onChange('notes', e.target.value)}
-        placeholder="Optional notes about the intake..."
+        placeholder="Any initial context about this intake…"
         rows={3}
       />
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 24, paddingTop: 16, borderTop: '1px solid var(--border, #e5e7eb)' }}>
-        <Button variant="ghost" onClick={onCancel}>Cancel</Button>
-        <Button variant="primary" onClick={handleNext}>Continue &rarr;</Button>
+      <div className={styles.navRow}>
+        <Button variant="secondary" onClick={onCancel}>Cancel</Button>
+        <Button variant="primary" onClick={handleNext}>Continue &rarr; Case Type</Button>
       </div>
     </div>
   );

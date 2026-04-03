@@ -10,7 +10,7 @@ import styles from './NewCase.module.css';
 
 const STEPS = [
   { label: 'Subject & Receipt' },
-  { label: 'Investigation Type' },
+  { label: 'Case Type' },
   { label: 'Priority & Assignment' },
   { label: 'Review & Create' },
 ];
@@ -103,7 +103,7 @@ function NewCase() {
       <div className={styles.pageHeader}>
         <h1>New Case Intake</h1>
         <p className={styles.subtitle}>
-          Enter subject information, select investigation type, and assign priority.
+          Complete each step to create the case. Suspense dates set automatically on creation.
         </p>
       </div>
 

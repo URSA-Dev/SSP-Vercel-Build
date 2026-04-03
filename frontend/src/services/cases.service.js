@@ -650,6 +650,30 @@ export async function updateCase(id, data) {
   return cloneCase(c);
 }
 
+export async function updateCaseStatus(id, status) {
+  if (!USE_MOCK) {
+    const { data } = await api.patch(`/cases/${id}/status`, { status });
+    return normalizeCase(data.data || data);
+  }
+  const c = findMockCase(id);
+  if (!c) throw new Error(`Case ${id} not found`);
+  c.status = status;
+  c.updatedAt = new Date().toISOString();
+  return cloneCase(c);
+}
+
+export async function submitForQA(caseId) {
+  if (!USE_MOCK) {
+    const { data } = await api.post(`/cases/${caseId}/submit-qa`);
+    return normalizeCase(data.data || data);
+  }
+  const c = findMockCase(caseId);
+  if (!c) throw new Error(`Case ${caseId} not found`);
+  c.status = 'QA_REVIEW';
+  c.updatedAt = new Date().toISOString();
+  return cloneCase(c);
+}
+
 export async function addIssue(caseId, issue) {
   if (!USE_MOCK) {
     try {

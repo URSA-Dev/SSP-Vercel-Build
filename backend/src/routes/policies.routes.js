@@ -3,6 +3,7 @@ import { authenticate } from '../middleware/auth.js';
 import { auditLog } from '../middleware/audit.js';
 import { paginate } from '../middleware/pagination.js';
 import { validate } from '../middleware/validate.js';
+import { requireRole } from '../middleware/require-role.js';
 import {
   listPolicies,
   getPolicy,
@@ -32,9 +33,10 @@ router.put(
   updatePolicy,
 );
 
-// DELETE /api/v1/policies/:id — soft delete
+// DELETE /api/v1/policies/:id — soft delete (supervisor/admin only)
 router.delete(
   '/:id',
+  requireRole('SUPERVISOR', 'ADMIN'),
   validate({ params: { id: 'required|uuid' } }),
   auditLog('policy'),
   deletePolicy,

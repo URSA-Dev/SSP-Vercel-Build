@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { saveMemo, updateCase } from '../../../services/cases.service';
+import { saveMemo, submitForQA } from '../../../services/cases.service';
 import { DISPOSITIONS } from '../../../utils/constants';
 import { fmtDT } from '../../../utils/dates';
 import Badge from '../../../components/Badge/Badge';
@@ -87,7 +87,7 @@ function Memo({ caseData, onRefresh }) {
   async function handleSaveDisposition() {
     setSavingDisposition(true);
     try {
-      await updateCase(caseData.id, { disposition });
+      await saveMemo(caseData.id, { disposition });
       await onRefresh();
       toast('Disposition saved', 'success');
     } catch {
@@ -139,15 +139,17 @@ function Memo({ caseData, onRefresh }) {
     toast('QA check complete', 'info');
   }
 
+  const canSubmitQA = caseData.status === 'MEMO_DRAFT';
+
   async function handleSubmitQA() {
     setSaving(true);
     try {
-      await saveMemo(caseData.id, { status: 'QA_REVIEW' });
-      await updateCase(caseData.id, { status: 'QA_REVIEW' });
+      await submitForQA(caseData.id);
       await onRefresh();
       toast('Submitted for QA review', 'success');
-    } catch {
-      toast('Failed to submit for QA', 'error');
+    } catch (err) {
+      const msg = err?.response?.data?.error?.message || 'Failed to submit for QA';
+      toast(msg, 'error');
     } finally {
       setSaving(false);
     }
@@ -262,10 +264,15 @@ function Memo({ caseData, onRefresh }) {
                           variant="primary"
                           size="sm"
                           onClick={handleSubmitQA}
-                          disabled={saving}
+                          disabled={saving || !canSubmitQA}
                         >
                           {saving ? 'Submitting...' : 'Submit for QA Review'}
                         </Button>
+                        {!canSubmitQA && (
+                          <div className="text-xs text-muted mt-1">
+                            Case must be in Memo Draft status to submit for QA.
+                          </div>
+                        )}
                       </div>
                     )}
                   </CardBody>

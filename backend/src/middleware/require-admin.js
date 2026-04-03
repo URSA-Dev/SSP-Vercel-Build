@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/index.js';
 import db from '../config/database.js';
+import logger from '../utils/logger.js';
+
+const log = logger.child({ module: 'require-admin' });
 
 /**
  * Middleware that enforces ADMIN-only access.
@@ -49,7 +52,7 @@ export function requireAdmin(req, res, next) {
         next();
       })
       .catch((err) => {
-        console.error('Admin auth DB lookup failed:', err.message);
+        log.error({ err }, 'Admin auth DB lookup failed');
         return res.status(500).json({
           error: { code: 'INTERNAL_ERROR', message: 'Internal server error' },
         });
