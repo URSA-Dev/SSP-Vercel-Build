@@ -22,7 +22,6 @@ export const createCaseSchema = z.object({
     subject_first: z.string().optional(),
     middle_init: z.string().max(1).optional(),
     dob_year: z.number().int().min(1900).optional(),
-    employee_id: z.string().optional(),
     priority: z.enum(CASE_PRIORITIES).default('NORMAL'),
     assigned_to: z.string().uuid().optional(),
     received_date: z.string().optional(),

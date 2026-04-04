@@ -1,21 +1,12 @@
 import SubjectModel from '../models/subject.model.js';
 
 /**
- * GET /api/v1/subjects/search?q=lastName&init=R&middleInit=J&dobYear=1990&empId=12345
+ * GET /api/v1/subjects/search?q=lastName&init=R&middleInit=J&dobYear=1990
  * Search for a subject match. Returns match + case count.
  */
 export async function searchSubjects(req, res, next) {
   try {
-    const { q, init, middleInit, dobYear, empId } = req.query;
-
-    // Try employee ID match first
-    if (empId) {
-      const subject = await SubjectModel.findByEmployeeId(empId);
-      if (subject) {
-        const caseCount = await SubjectModel.getCaseCount(subject.id);
-        return res.json({ data: [{ ...subject, case_count: caseCount }] });
-      }
-    }
+    const { q, init, middleInit, dobYear } = req.query;
 
     // Try name composite match
     if (q && init) {

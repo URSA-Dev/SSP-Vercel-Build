@@ -133,7 +133,7 @@ export async function createCase(req, res, next) {
   try {
     const {
       case_type, subject_last, subject_init,
-      middle_init, dob_year, employee_id,
+      middle_init, dob_year,
       case_subtypes, priority, received_date,
     } = req.body;
 
@@ -152,7 +152,6 @@ export async function createCase(req, res, next) {
       subject_init: subject_init || '',
       middle_init: middle_init || null,
       dob_year: dob_year ? parseInt(dob_year, 10) : null,
-      employee_id: employee_id || null,
     });
 
     const caseNumber = await CaseModel.getNextCaseNumber();

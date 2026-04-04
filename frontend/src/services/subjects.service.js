@@ -4,7 +4,7 @@ import api, { USE_MOCK } from './api';
  * Search for an existing subject by name identifiers.
  * Returns array of matches (0 or 1) with case_count.
  */
-export async function searchSubjects({ lastName, init, middleInit, dobYear, empId }) {
+export async function searchSubjects({ lastName, init, middleInit, dobYear }) {
   if (!USE_MOCK) {
     try {
       const params = {};
@@ -12,7 +12,6 @@ export async function searchSubjects({ lastName, init, middleInit, dobYear, empI
       if (init) params.init = init;
       if (middleInit) params.middleInit = middleInit;
       if (dobYear) params.dobYear = dobYear;
-      if (empId) params.empId = empId;
 
       const { data } = await api.get('/subjects/search', { params });
       return data.data || [];

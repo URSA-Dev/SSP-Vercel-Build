@@ -40,7 +40,6 @@ function ReviewCreate({ data, onBack, onCreate }) {
       label: 'Subject',
       value: subjectDisplay,
     },
-    ...(data.employeeId ? [{ label: 'Employee / Badge ID', value: data.employeeId }] : []),
     ...(data.dobYear ? [{ label: 'DOB Year', value: String(data.dobYear) }] : []),
     ...(data.subjectId ? [{ label: 'Subject Link', value: <Badge variant="green">Linked to existing subject</Badge> }] : []),
     {

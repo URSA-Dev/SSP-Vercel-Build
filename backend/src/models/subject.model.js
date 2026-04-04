@@ -14,7 +14,7 @@ export async function findAll(filters = {}, pagination = {}) {
     const term = `%${filters.search}%`;
     query = query.where(function () {
       this.whereILike('subject_last', term)
-        .orWhereILike('employee_id', term);
+        .orWhereILike('case_id', term);
     });
   }
 
@@ -41,12 +41,12 @@ export async function findById(id) {
 }
 
 /**
- * Find a subject by employee ID (strongest match).
+ * Find a subject by case_id (strongest match).
  */
-export async function findByEmployeeId(employeeId) {
-  if (!employeeId) return null;
+export async function findByCaseId(caseId) {
+  if (!caseId) return null;
   return db(TABLE)
-    .where({ employee_id: employeeId })
+    .where({ case_id: caseId })
     .whereNull('deleted_at')
     .first();
 }
@@ -76,40 +76,45 @@ export async function findByName(subjectLast, subjectInit, middleInit = null, do
 }
 
 /**
- * Atomic find-or-create. Checks employee_id first, then name composite.
+ * Generate the next case ID in CID-XXXXX format.
+ */
+export async function getNextCaseId() {
+  const latest = await db(TABLE)
+    .whereNotNull('case_id')
+    .orderBy('case_id', 'desc')
+    .first();
+
+  let sequence = 1;
+  if (latest && latest.case_id) {
+    const num = parseInt(latest.case_id.replace('CID-', ''), 10);
+    if (!isNaN(num)) sequence = num + 1;
+  }
+
+  return `CID-${String(sequence).padStart(5, '0')}`;
+}
+
+/**
+ * Atomic find-or-create. Checks name composite.
+ * Auto-generates case_id for new subjects.
  * Returns the existing or newly created subject.
  */
 export async function findOrCreate(data) {
-  const { subject_last, subject_init, middle_init, dob_year, employee_id } = data;
+  const { subject_last, subject_init, middle_init, dob_year } = data;
 
-  // Priority 1: match by employee_id
-  if (employee_id) {
-    const byEmpId = await findByEmployeeId(employee_id);
-    if (byEmpId) return byEmpId;
-  }
-
-  // Priority 2: match by name composite
+  // Match by name composite
   const byName = await findByName(subject_last, subject_init, middle_init, dob_year);
-  if (byName) {
-    // If we now have an employee_id and the existing record doesn't, update it
-    if (employee_id && !byName.employee_id) {
-      const [updated] = await db(TABLE)
-        .where({ id: byName.id })
-        .update({ employee_id, updated_at: new Date() })
-        .returning('*');
-      return updated;
-    }
-    return byName;
-  }
+  if (byName) return byName;
 
-  // No match — create new subject
+  // No match — create new subject with auto-generated case_id
+  const caseId = await getNextCaseId();
+
   const insertData = {
     subject_last,
     subject_init: subject_init.toUpperCase(),
+    case_id: caseId,
   };
   if (middle_init) insertData.middle_init = middle_init.toUpperCase();
   if (dob_year) insertData.dob_year = dob_year;
-  if (employee_id) insertData.employee_id = employee_id;
 
   const [created] = await db(TABLE).insert(insertData).returning('*');
   return created;
@@ -152,6 +157,6 @@ export async function softDelete(id) {
 }
 
 export default {
-  findAll, findById, findByEmployeeId, findByName,
-  findOrCreate, getCaseCount, create, update, softDelete,
+  findAll, findById, findByCaseId, findByName,
+  findOrCreate, getNextCaseId, getCaseCount, create, update, softDelete,
 };

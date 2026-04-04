@@ -34,7 +34,6 @@ function SubjectReceipt({ data, onChange, onNext, onCancel }) {
           init: firstInit,
           middleInit: data.middleInitial?.trim() || undefined,
           dobYear: data.dobYear || undefined,
-          empId: data.employeeId?.trim() || undefined,
         });
         if (results.length > 0) {
           const match = results[0];
@@ -53,7 +52,7 @@ function SubjectReceipt({ data, onChange, onNext, onCancel }) {
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [data.subjectLastName, data.subjectFirstInitial, data.middleInitial, data.dobYear, data.employeeId]);
+  }, [data.subjectLastName, data.subjectFirstInitial, data.middleInitial, data.dobYear]);
 
   function handleBlur(field) {
     setTouched(t => ({ ...t, [field]: true }));
@@ -131,11 +130,11 @@ function SubjectReceipt({ data, onChange, onNext, onCancel }) {
             hint="Year only — no full DOB"
           />
           <Input
-            label="Employee / Badge ID"
-            value={data.employeeId}
-            onChange={(e) => onChange('employeeId', e.target.value)}
-            placeholder="DoW badge number"
-            hint="Strongest identifier"
+            label="Case ID"
+            value={subjectMatch?.case_id || 'Auto-generated'}
+            readOnly
+            disabled
+            hint="System-generated on creation"
           />
           <Input
             label="Date Materials Received"
@@ -152,7 +151,7 @@ function SubjectReceipt({ data, onChange, onNext, onCancel }) {
         <Alert variant="olive" icon="&#128101;" title="Existing Subject Found">
           <strong>{subjectMatch.subject_last}, {subjectMatch.subject_init}.</strong>
           {subjectMatch.middle_init && ` ${subjectMatch.middle_init}.`}
-          {subjectMatch.employee_id && ` — ID: ${subjectMatch.employee_id}`}
+          {subjectMatch.case_id && ` — Case ID: ${subjectMatch.case_id}`}
           <br />
           This subject has <strong>{subjectMatch.case_count}</strong> existing case(s).
           The new case will be linked to this subject record.

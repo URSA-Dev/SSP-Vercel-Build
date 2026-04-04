@@ -166,7 +166,6 @@ function denormalizeCase(data) {
   if (data.caseSubtypes !== undefined) out.case_subtypes = data.caseSubtypes;
   if (data.middleInitial !== undefined) out.middle_init = data.middleInitial;
   if (data.dobYear !== undefined) out.dob_year = data.dobYear;
-  if (data.employeeId !== undefined) out.employee_id = data.employeeId;
   if (data.subjectId !== undefined) out.subject_id = data.subjectId;
   // Pass through any snake_case keys already present
   Object.keys(data).forEach((k) => {
