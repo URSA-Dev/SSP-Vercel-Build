@@ -1,5 +1,6 @@
 import db from '../config/database.js';
 import CaseModel from '../models/case.model.js';
+import SubjectModel from '../models/subject.model.js';
 import { createError } from '../middleware/error-handler.js';
 import { parsePagination, paginationMeta } from '../middleware/pagination.js';
 
@@ -132,6 +133,7 @@ export async function createCase(req, res, next) {
   try {
     const {
       case_type, subject_last, subject_init,
+      middle_init, dob_year, employee_id,
       priority, received_date,
     } = req.body;
 
@@ -144,6 +146,15 @@ export async function createCase(req, res, next) {
       });
     }
 
+    // Find or create the canonical subject record
+    const subject = await SubjectModel.findOrCreate({
+      subject_last,
+      subject_init: subject_init || '',
+      middle_init: middle_init || null,
+      dob_year: dob_year ? parseInt(dob_year, 10) : null,
+      employee_id: employee_id || null,
+    });
+
     const caseNumber = await CaseModel.getNextCaseNumber();
     const recvDate = received_date ? new Date(received_date) : new Date();
     const suspense48hr = new Date(recvDate.getTime() + 48 * 60 * 60 * 1000);
@@ -152,8 +163,9 @@ export async function createCase(req, res, next) {
     const caseData = {
       case_number: caseNumber,
       case_type,
-      subject_last,
-      subject_init: subject_init || null,
+      subject_id: subject.id,
+      subject_last: subject.subject_last,
+      subject_init: subject.subject_init,
       priority: priority || 'NORMAL',
       received_date: recvDate,
       suspense_48hr: suspense48hr,

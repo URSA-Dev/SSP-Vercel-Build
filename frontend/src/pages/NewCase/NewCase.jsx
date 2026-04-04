@@ -25,6 +25,10 @@ function NewCase() {
   const [formData, setFormData] = useState({
     subjectLastName: '',
     subjectFirstInitial: '',
+    middleInitial: '',
+    dobYear: '',
+    employeeId: '',
+    subjectId: null,
     receivedDate: todayISO(),
     notes: '',
     caseType: '',
@@ -54,6 +58,10 @@ function NewCase() {
     const payload = {
       subjectLastName: formData.subjectLastName,
       subjectFirstInitial: formData.subjectFirstInitial.toUpperCase(),
+      middleInitial: formData.middleInitial?.toUpperCase() || '',
+      dobYear: formData.dobYear || null,
+      employeeId: formData.employeeId || null,
+      subjectId: formData.subjectId,
       subjectName: `${formData.subjectLastName}, ${formData.subjectFirstInitial.toUpperCase()}.`,
       caseType: formData.caseType,
       priority: formData.priority,

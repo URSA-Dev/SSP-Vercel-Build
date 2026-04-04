@@ -16,6 +16,7 @@ import fclRoutes from './routes/fcl.routes.js';
 import travelRoutes from './routes/travel.routes.js';
 import violationsRoutes from './routes/violations.routes.js';
 import contentRoutes from './routes/content.routes.js';
+import subjectsRoutes from './routes/subjects.routes.js';
 import { requireAdmin } from './middleware/require-admin.js';
 import { errorHandler, notFound } from './middleware/error-handler.js';
 import { apiLimiter, loginLimiter } from './middleware/rate-limit.js';
@@ -72,6 +73,7 @@ app.get('/api/v1/health', (req, res) => {
 
 // API routes — login limiter on auth
 app.use('/api/v1/auth', loginLimiter, authRoutes);
+app.use('/api/v1/subjects', subjectsRoutes);
 app.use('/api/v1/cases', casesRoutes);
 app.use('/api/v1/documents', documentsRoutes);
 app.use('/api/v1/qa', qaRoutes);

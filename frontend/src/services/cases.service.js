@@ -15,6 +15,7 @@ function normalizeCase(c) {
     subjectName: c.subject_last && c.subject_init
       ? `${c.subject_last}, ${c.subject_init}.`
       : c.subjectName || `${c.last || c.subject_last || ''}, ${c.init || c.subject_init || ''}.`,
+    subjectId: c.subject_id || c.subjectId || null,
     subjectLastName: c.subject_last || c.subjectLastName || c.last || '',
     subjectFirstInitial: c.subject_init || c.subjectFirstInitial || c.init || '',
     caseType: c.case_type || c.caseType || '',
@@ -161,6 +162,10 @@ function denormalizeCase(data) {
   if (data.disposition !== undefined) out.disposition = data.disposition;
   if (data.recStatus !== undefined) out.rec_status = data.recStatus;
   if (data.notes !== undefined) out.notes = data.notes;
+  if (data.middleInitial !== undefined) out.middle_init = data.middleInitial;
+  if (data.dobYear !== undefined) out.dob_year = data.dobYear;
+  if (data.employeeId !== undefined) out.employee_id = data.employeeId;
+  if (data.subjectId !== undefined) out.subject_id = data.subjectId;
   // Pass through any snake_case keys already present
   Object.keys(data).forEach((k) => {
     if (k.includes('_')) out[k] = data[k];

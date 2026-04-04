@@ -27,11 +27,22 @@ function ReviewCreate({ data, onBack, onCreate }) {
     }
   }
 
+  const subjectDisplay = [
+    data.subjectLastName || '\u2014',
+    ', ',
+    data.subjectFirstInitial?.toUpperCase() || '\u2014',
+    '.',
+    data.middleInitial ? ` ${data.middleInitial.toUpperCase()}.` : '',
+  ].join('');
+
   const rows = [
     {
       label: 'Subject',
-      value: `${data.subjectLastName || '\u2014'}, ${data.subjectFirstInitial?.toUpperCase() || '\u2014'}.`,
+      value: subjectDisplay,
     },
+    ...(data.employeeId ? [{ label: 'Employee / Badge ID', value: data.employeeId }] : []),
+    ...(data.dobYear ? [{ label: 'DOB Year', value: String(data.dobYear) }] : []),
+    ...(data.subjectId ? [{ label: 'Subject Link', value: <Badge variant="green">Linked to existing subject</Badge> }] : []),
     {
       label: 'Case Type',
       value: typeInfo ? (
