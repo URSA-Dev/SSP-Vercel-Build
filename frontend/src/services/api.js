@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Set to true to force mock mode (no backend required)
-export const USE_MOCK = !import.meta.env.VITE_API_URL && false;
+// Mock mode when no backend API URL is configured
+export const USE_MOCK = !import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || '/api/v1',
