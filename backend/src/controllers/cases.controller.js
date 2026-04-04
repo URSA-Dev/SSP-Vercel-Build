@@ -134,7 +134,7 @@ export async function createCase(req, res, next) {
     const {
       case_type, subject_last, subject_init,
       middle_init, dob_year, employee_id,
-      priority, received_date,
+      case_subtypes, priority, received_date,
     } = req.body;
 
     if (!case_type || !subject_last) {
@@ -163,6 +163,7 @@ export async function createCase(req, res, next) {
     const caseData = {
       case_number: caseNumber,
       case_type,
+      case_subtypes: JSON.stringify(case_subtypes || []),
       subject_id: subject.id,
       subject_last: subject.subject_last,
       subject_init: subject.subject_init,
@@ -201,7 +202,7 @@ export async function updateCase(req, res, next) {
 
     const allowed = [
       'subject_last', 'subject_init', 'priority',
-      'assigned_to', 'case_type', 'notes', 'surge', 'disposition', 'rec_status',
+      'assigned_to', 'case_type', 'case_subtypes', 'notes', 'disposition', 'rec_status',
     ];
     const updates = {};
     for (const key of allowed) {

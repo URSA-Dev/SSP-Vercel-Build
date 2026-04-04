@@ -86,6 +86,58 @@ select.formControl {
   color: var(--red);
 }
 
+/* ── Checkbox Group (multi-select) ── */
+.checkboxList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1.5px solid var(--surface-4);
+  border-radius: var(--r-sm);
+  padding: 8px;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--surface);
+}
+
+.checkboxListError {
+  border-color: var(--red) !important;
+  background: var(--red-pale);
+}
+
+.checkboxItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--ink);
+  transition: background .1s;
+  min-height: 44px;
+}
+
+.checkboxItem:hover {
+  background: var(--surface-2);
+}
+
+.checkboxItemChecked {
+  background: var(--uscg-pale);
+  font-weight: 600;
+}
+
+.checkboxInput {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--uscg);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.checkboxLabel {
+  user-select: none;
+}
+
 /* ── Mobile: stack grid columns ── */
 @media (max-width: 768px) {
   .g2, .g3, .g4 {

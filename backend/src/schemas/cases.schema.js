@@ -16,9 +16,13 @@ const uuidParam = z.object({ id: z.string().uuid() });
 export const createCaseSchema = z.object({
   body: z.object({
     case_type: z.enum(CASE_TYPES, { message: `Must be one of: ${CASE_TYPES.join(', ')}` }),
+    case_subtypes: z.array(z.string()).default([]),
     subject_last: z.string().min(1, 'Subject last name is required'),
     subject_init: z.string().min(1).max(1, 'Subject initial must be a single character'),
     subject_first: z.string().optional(),
+    middle_init: z.string().max(1).optional(),
+    dob_year: z.number().int().min(1900).optional(),
+    employee_id: z.string().optional(),
     priority: z.enum(CASE_PRIORITIES).default('NORMAL'),
     assigned_to: z.string().uuid().optional(),
     received_date: z.string().optional(),

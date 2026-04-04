@@ -8,6 +8,9 @@ function InvestigationType({ data, onChange, onNext, onBack }) {
   const [error, setError] = useState('');
 
   function handleSelect(code) {
+    if (code !== data.caseType) {
+      onChange('caseSubtypes', []);
+    }
     onChange('caseType', code);
     setError('');
   }

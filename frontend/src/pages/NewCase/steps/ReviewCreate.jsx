@@ -51,6 +51,14 @@ function ReviewCreate({ data, onBack, onCreate }) {
         <span style={{ color: 'var(--ink-5)' }}>&mdash;</span>
       ),
     },
+    ...(data.caseSubtypes && data.caseSubtypes.length > 0
+      ? [{
+          label: 'Case Subtype(s)',
+          value: data.caseSubtypes.map((s) => (
+            <Badge key={s} variant="olive" style={{ marginRight: 4, marginBottom: 4 }}>{s}</Badge>
+          )),
+        }]
+      : []),
     {
       label: 'Date Received',
       value: fmtDate(data.receivedDate) || '\u2014',
@@ -58,10 +66,6 @@ function ReviewCreate({ data, onBack, onCreate }) {
     {
       label: 'Priority',
       value: pb ? <Badge variant={pb.variant}>{pb.label}</Badge> : '\u2014',
-    },
-    {
-      label: 'Surge',
-      value: data.surgeFlag ? <Badge variant="violet">Flagged as Surge</Badge> : 'No',
     },
     {
       label: 'Assigned To',

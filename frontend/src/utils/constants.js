@@ -18,6 +18,71 @@ export const CASE_STATUSES = [
 
 export const PRIORITIES = ['CRITICAL', 'HIGH', 'NORMAL', 'LOW', 'SURGE'];
 
+export const CASE_SUBTYPE_MAP = {
+  PVP: [
+    'Tier 1 Low public trust',
+    'Tier 2 Moderate public trust',
+    'Tier 3 Secret - Most common',
+    'Tier 5 Top Secret/SCI',
+    'PPR Periodic review',
+    'LBI Limited background',
+    'Continuous Vetting (CV)',
+    'Transfer-In-Status (TIS)',
+    'Reciprocity Request',
+  ],
+  SEAD3: [
+    'Foreign Activities',
+    'Foreign Contacts',
+    'Personal Conduct',
+    'Treatment and Counseling',
+    'Security Concerns',
+    'Financial Anomalies',
+    'Outside Employment/Activities',
+    'Media Contacts',
+    'Reporting Others',
+  ],
+  INDOC: [
+    'SF312 (SECRET/TOP SECRET)',
+    'NATO (North Atlantic Treaty Organization)',
+    'CNWDI (Critical Nuclear Weapons Design Information)',
+    'Admin Debrief',
+    'INDOC Request',
+  ],
+  FTRV: [
+    'Pre-Travel Reporting',
+    'Post-Travel Reporting',
+    'Failure to Report',
+  ],
+  SINC: [
+    'Initial Report',
+    'Follow-Up',
+    'Close Out',
+  ],
+  INTHR: [],
+  SAP: [
+    'PSQ Template 1 - Foreign Affections',
+    'PSQ Template 2 - Foreign Associations',
+    'PSQ Template 3 - Foreign Travel',
+    'PSQ Template 4 - Personal Conduct',
+    'PSQ Template 5 - Financial Responsibilities',
+  ],
+  TRAIN: [
+    'Initial Security Training',
+    'Annual Refresher Training',
+    'Cyber Awareness',
+    'Derivative Classification',
+    'Foreign Travel',
+    'Insider Threat',
+    'Personally Identifiable Information (PII)',
+    'Reporting Requirements',
+  ],
+  VAR: [
+    'DISS (Defense Information System for Security)',
+    'Memo (Local)',
+    'Memo (Contractor Support Element)',
+  ],
+};
+
 export const SEVERITIES = ['CRITICAL', 'HIGH', 'MODERATE', 'LOW', 'ADMINISTRATIVE'];
 
 export const ISSUE_CATEGORIES = [

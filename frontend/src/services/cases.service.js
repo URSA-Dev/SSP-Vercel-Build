@@ -19,6 +19,7 @@ function normalizeCase(c) {
     subjectLastName: c.subject_last || c.subjectLastName || c.last || '',
     subjectFirstInitial: c.subject_init || c.subjectFirstInitial || c.init || '',
     caseType: c.case_type || c.caseType || '',
+    caseSubtypes: c.case_subtypes || c.caseSubtypes || [],
     status: c.status || '',
     priority: c.priority || 'NORMAL',
     assignedTo: c.assigned_to_name || c.assignedTo || c.assigned_to || '',
@@ -162,6 +163,7 @@ function denormalizeCase(data) {
   if (data.disposition !== undefined) out.disposition = data.disposition;
   if (data.recStatus !== undefined) out.rec_status = data.recStatus;
   if (data.notes !== undefined) out.notes = data.notes;
+  if (data.caseSubtypes !== undefined) out.case_subtypes = data.caseSubtypes;
   if (data.middleInitial !== undefined) out.middle_init = data.middleInitial;
   if (data.dobYear !== undefined) out.dob_year = data.dobYear;
   if (data.employeeId !== undefined) out.employee_id = data.employeeId;

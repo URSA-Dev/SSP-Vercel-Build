@@ -1,22 +1,18 @@
+import { useState } from 'react';
 import Button from '../../../components/Button/Button';
 import Select from '../../../components/FormControls/Select';
 import Input from '../../../components/FormControls/Input';
+import CheckboxGroup from '../../../components/FormControls/CheckboxGroup';
 import FormGrid from '../../../components/FormControls/FormGrid';
-import { PRIORITIES } from '../../../utils/constants';
+import Alert from '../../../components/Alert/Alert';
+import { CASE_SUBTYPE_MAP } from '../../../utils/constants';
 import styles from '../NewCase.module.css';
 
 const PRIORITY_OPTIONS = [
-  { value: '', label: '— Select Priority —' },
   { value: 'CRITICAL', label: 'CRITICAL' },
   { value: 'HIGH', label: 'HIGH' },
   { value: 'NORMAL', label: 'NORMAL' },
   { value: 'LOW', label: 'LOW' },
-  { value: 'SURGE', label: 'SURGE' },
-];
-
-const SURGE_OPTIONS = [
-  { value: 'false', label: 'No — Standard intake' },
-  { value: 'true', label: 'Yes — Flag as surge workload' },
 ];
 
 const ANALYST_OPTIONS = [
@@ -28,9 +24,29 @@ const ANALYST_OPTIONS = [
 ];
 
 function PriorityAssignment({ data, onChange, onNext, onBack }) {
+  const [error, setError] = useState('');
+
+  const subtypeOptions = CASE_SUBTYPE_MAP[data.caseType] || [];
+  const hasSubtypes = subtypeOptions.length > 0;
+
+  function handleNext() {
+    if (hasSubtypes && (!data.caseSubtypes || data.caseSubtypes.length === 0)) {
+      setError('Please select at least one case subtype.');
+      return;
+    }
+    setError('');
+    onNext();
+  }
+
   return (
     <div className={styles.stepCard}>
       <div className={styles.sectionTitle}>Step 3 — Priority &amp; Assignment</div>
+
+      {error && (
+        <Alert variant="red" title="Selection Required">
+          {error}
+        </Alert>
+      )}
 
       <div className={styles.formSection}>
         <FormGrid columns={2}>
@@ -42,33 +58,48 @@ function PriorityAssignment({ data, onChange, onNext, onBack }) {
             options={PRIORITY_OPTIONS}
           />
           <Select
-            label="Surge Flag"
-            value={String(data.surgeFlag)}
-            onChange={(e) => onChange('surgeFlag', e.target.value === 'true')}
-            options={SURGE_OPTIONS}
-          />
-        </FormGrid>
-      </div>
-
-      <div className={styles.formSection}>
-        <FormGrid columns={2}>
-          <Select
             label="Assign To"
             required
             value={data.assignedTo}
             onChange={(e) => onChange('assignedTo', e.target.value)}
             options={ANALYST_OPTIONS}
           />
-          <Input
-            label="Routing / Handling Notes"
-            value={data.assignmentNotes}
-            onChange={(e) => onChange('assignmentNotes', e.target.value)}
-            placeholder="Routing or handling notes…"
-          />
         </FormGrid>
       </div>
 
-      {/* Suspense info panel — matches template */}
+      {hasSubtypes && (
+        <div className={styles.formSection}>
+          <CheckboxGroup
+            label="Case Subtype"
+            required
+            value={data.caseSubtypes || []}
+            options={subtypeOptions}
+            onChange={(selected) => {
+              onChange('caseSubtypes', selected);
+              if (selected.length > 0) setError('');
+            }}
+            hint="Select one or more subtypes"
+            error={error && (!data.caseSubtypes || data.caseSubtypes.length === 0) ? error : undefined}
+          />
+        </div>
+      )}
+
+      {!hasSubtypes && data.caseType === 'INTHR' && (
+        <Alert variant="blue" icon="&#8505;" title="No Subtypes">
+          Insider Threat cases do not require a subtype selection.
+        </Alert>
+      )}
+
+      <div className={styles.formSection}>
+        <Input
+          label="Routing / Handling Notes"
+          value={data.assignmentNotes}
+          onChange={(e) => onChange('assignmentNotes', e.target.value)}
+          placeholder="Routing or handling notes…"
+        />
+      </div>
+
+      {/* Suspense info panel */}
       <div className={styles.suspensePanel}>
         <div className={styles.suspensePanelTitle}>
           Suspense Dates — Auto-set on case creation
@@ -93,7 +124,7 @@ function PriorityAssignment({ data, onChange, onNext, onBack }) {
 
       <div className={styles.navRow}>
         <Button variant="secondary" onClick={onBack}>&larr; Back</Button>
-        <Button variant="primary" onClick={onNext}>Continue &rarr; Review &amp; Create</Button>
+        <Button variant="primary" onClick={handleNext}>Continue &rarr; Review &amp; Create</Button>
       </div>
     </div>
   );
